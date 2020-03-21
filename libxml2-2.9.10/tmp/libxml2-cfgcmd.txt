@@ -1,0 +1,1 @@
+cmd='/mnt/d/redland/libxml2-2.9.10/autogen.sh;--prefix=/mnt/d/redland/libxml2-2.9.10/install.ubuntu'

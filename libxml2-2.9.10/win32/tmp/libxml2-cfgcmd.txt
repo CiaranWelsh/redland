@@ -1,0 +1,1 @@
+cmd='C:/Windows/System32/cscript.exe;D:/redland/libxml2-2.9.10/win32/configure.js;compiler=msvc;prefix=D:/redland/install.windows;include=D:/redland/libiconv_x64-windows/include;lib=D:/redland/libiconv_x64-windows/lib'
