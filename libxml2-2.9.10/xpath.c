@@ -62,6 +62,7 @@
 #include <libxml/pattern.h>
 #endif
 
+
 #include "buf.h"
 
 #ifdef LIBXML_PATTERN_ENABLED

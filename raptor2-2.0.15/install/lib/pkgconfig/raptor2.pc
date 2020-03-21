@@ -1,0 +1,11 @@
+prefix=/mnt/d/redland/raptor2-2.0.15/install
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/raptor2
+
+Name: Raptor RDF Parsing Library
+Description: RDF Parser Toolkit Library
+Version: 2.0.15
+Libs: -L${libdir} -lraptor2
+Libs.private: /usr/lib/x86_64-linux-gnu/libxslt.a /usr/local/lib/libxml2.a
+Cflags: -I${includedir}

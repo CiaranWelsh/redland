@@ -10,6 +10,8 @@ include(ExternalProject)
 # Build options
 #
 option(BUILD_SHARED_LIBS OFF)
+OPTION(MAKE_VERBOSE_MAKEFILE ON)
+
 
 # curl paths
 set(CURL_SOURCE_DIR ${CMAKE_SOURCE_DIR}/curl-7.69.1)
@@ -23,6 +25,9 @@ set(ZLIB_INSTALL_DIR ${CMAKE_SOURCE_DIR}/zlib-1.2.5)
 #################################################################
 # Get or build dependencies
 #
+
+# this variable is platform specific
+set(LIBXML2_EXTRA_LIBS "")
 
 if (WIN32 AND MSVC) # AND MSVC so we can add cygwin/mingw specific stuff later
     # libxml paths
@@ -72,18 +77,8 @@ if (WIN32 AND MSVC) # AND MSVC so we can add cygwin/mingw specific stuff later
             -DCMAKE_INSTALL_PREFIX=${CURL_INSTALL_DIR}
     )
 
-
-    #    # libxml2 paths for windows builds (prebuilt)
-    #    set(LIBXML2_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32)
-    #    set(LIBXML2_BIN_DIR ${LIBXML2_INSTALL_PREFIX}/bin)
-    #    set(LIBXML2_INCLUDE_DIRS ${LIBXML2_INSTALL_PREFIX}/include)
-    #    set(LIBXML2_LIB_DIR ${LIBXML2_INSTALL_PREFIX}/lib)
-    #    find_library(LIBXML2_STATIC_LIBRARY
-    #            NAMES libxml2
-    #            PATHS ${LIBXML2_LIB_DIR}
-    #            REQUIRED
-    #            )
 elseif (UNIX)
+    list(APPEND LIBXML2_EXTRA_LIBS "m" "lzma" "c")
 
     set(LIBXML2_SOURCE_DIR ${CMAKE_SOURCE_DIR}/libxml2-2.9.10)
     set(LIBXML2_BUILD_DIR ${LIBXML2_SOURCE_DIR}/build.ubuntu)
@@ -97,6 +92,7 @@ elseif (UNIX)
         MESSAGE(FATAL_ERROR "libxml2 autogen.sh script does not exist")
 
     endif ()
+
 
 
     ExternalProject_Add(
@@ -116,14 +112,7 @@ endif ()
 ## Commands for all systems
 ##
 #
-# find libxml2 static library
-#find_library(LIBXML2_STATIC_LIBRARY
-#        NAMES libxml2.dll libxml2.so
-#        PATHS
-#        /usr/lib/x86_64-linux-gnu # default for WSL
-#        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/bin # for windows x64
-#        REQUIRED
-#        )
+
 # find libxml2 static library
 find_library(LIBXML2_STATIC_LIBRARY
         NAMES libxml2.a libxml2.lib
@@ -141,6 +130,8 @@ find_path(LIBXML2_INCLUDE_DIRS
         /usr/include/libxml2/ # linux
         ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/include # windows x64
         )
+
+
 
 # find libxslt static library
 find_library(LIBXSLT_STATIC_LIBRARY
@@ -219,11 +210,13 @@ set(RAPTOR_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/install)
 
 message(STATUS "${CMAKE_SOURCE_DIR}/raptor2-2.0.15")
 
+string(REPLACE ";" "|" LIBXML2_EXTRA_LIBS_PIPE_SEP "${LIBXML2_EXTRA_LIBS}")
+
 ExternalProject_Add(
         raptor2
         SOURCE_DIR ${RAPTOR_SOURCE_DIR}
         BINARY_DIR ${RAPTOR_BUILD_DIR}
-
+        LIST_SEPARATOR |
         CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=${RAPTOR_INSTALL_PREFIX}
         -DCURL_STATIC_LIBRARY=${CURL_STATIC_LIBRARY}
@@ -236,6 +229,7 @@ ExternalProject_Add(
         -DZLIB_STATIC_LIBRARY=${ZLIB_STATIC_LIBRARY}
         -DMATH_INCLUDE_DIRS=${MATH_INCLUDE_DIRS}
         -DLIBM_STATIC_LIBRARY=${LIBM_STATIC_LIBRARY}
+        -DLIBXML2_EXTRA_LIBS=${LIBXML2_EXTRA_LIBS_PIPE_SEP}
 )
 
 #find_library(RAPTOR2_STATIC_LIBRARY)
@@ -288,6 +282,7 @@ message(STATUS "
     LIBXML2 Directories
         LIBXML2_INCLUDE_DIRS            ${LIBXML2_INCLUDE_DIRS}
         LIBXML2_STATIC_LIBRARY          ${LIBXML2_STATIC_LIBRARY}
+        LIBXML2_EXTRA_LIBS              ${LIBXML2_EXTRA_LIBS}
 
     LIBXSLT Directories
         LIBXSLT_STATIC_LIBRARY          ${LIBXSLT_STATIC_LIBRARY}
@@ -315,7 +310,18 @@ message(STATUS "
 
 
 
-
+#-DCURL_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libcurl.a
+#-DCURL_INCLUDE_DIRS=/usr/include/x86_64-linux-gnu
+#-DLIBXML2_INCLUDE_DIRS=/mnt/d/redland/libxml2-2.9.10/install.ubuntu/include/libxml2
+#-DLIBXML2_STATIC_LIBRARY=/mnt/d/redland/libxml2-2.9.10/install.ubuntu/lib/libxml2.a
+#-DLIBXSLT_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libxslt.a
+#-DLIBXSLT_INCLUDE_DIRS=/usr/include
+#-DZLIB_INCLUDE_DIRS=/usr/include
+#-DZLIB_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libz.a
+#-DMATH_INCLUDE_DIRS=/usr/include
+#-DLIBM_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libm.a
+#-DCMAKE_INSTALL_PREFIX=./install_solo
+#-DLIBXML2_EXTRA_LIBS=m;lzma;c
 
 
 
