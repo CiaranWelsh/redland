@@ -116,127 +116,127 @@ endif ()
 ## Commands for all systems
 ##
 #
-## find libxml2 static library
-##find_library(LIBXML2_STATIC_LIBRARY
-##        NAMES libxml2.dll libxml2.so
-##        PATHS
-##        /usr/lib/x86_64-linux-gnu # default for WSL
-##        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/bin # for windows x64
-##        REQUIRED
-##        )
-## find libxml2 static library
+# find libxml2 static library
 #find_library(LIBXML2_STATIC_LIBRARY
-#        NAMES libxml2.a libxml2.lib
+#        NAMES libxml2.dll libxml2.so
 #        PATHS
 #        /usr/lib/x86_64-linux-gnu # default for WSL
-#        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/lib # for windows x64
+#        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/bin # for windows x64
 #        REQUIRED
 #        )
-## find libxml2 include dirs
-#find_path(LIBXML2_INCLUDE_DIRS
-#        NAMES
-#        libxml/parser.h
-#        PATHS
-#        /usr/include/ # linux
-#        /usr/include/libxml2/ # linux
-#        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/include # windows x64
-#        )
-#
-## find libxslt static library
-#find_library(LIBXSLT_STATIC_LIBRARY
-#        NAMES libxslt.a libxslt.lib
-#        PATHS
-#        /usr/lib/x86_64-linux-gnu # default for WSL
-#        ${CMAKE_SOURCE_DIR}/libxslt-1.1.26.win32/lib # for windows x64
-#        REQUIRED
-#        )
-## find libxslt include dirs
-#find_path(LIBXSLT_INCLUDE_DIRS
-#        NAMES
-#        libxslt/xslt.h
-#        PATHS
-#        /usr/include/ # linux (WSL)
-#        ${CMAKE_SOURCE_DIR}/libxslt-1.1.26.win32/include # for windows x64
-#        )
-#
-## find CURL static library
-#find_library(CURL_STATIC_LIBRARY
-#        NAMES libcurl.a libcurl.lib libcurl-d_imp.lib
-#        PATHS
-#        /usr/lib/x86_64-linux-gnu # default for WSL
-#        ${CURL_INSTALL_DIR}/lib # for windows x64
-#        REQUIRED
-#        )
-## find CURL libraries
-#find_path(CURL_INCLUDE_DIRS
-#        NAMES
-#        curl/curl.h
-#        PATHS
-#        /usr/include/x86_64-linux-gnu/
-#        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/include # windows x64
-#        )
-#
-## find zlib static library
-#find_library(ZLIB_STATIC_LIBRARY
-#        NAMES libz.a
-#        PATHS
-#        /usr/lib/x86_64-linux-gnu # default for WSL
-#        ${ZLIB_INSTALL_DIR}/lib # for windows x64
-#        REQUIRED
-#        )
-## find ZLIB include_dirs
-#find_path(ZLIB_INCLUDE_DIRS
-#        NAMES
-#        zlib/zlib.h zlib.h
-#        PATHS
-#        /usr/include
-#        ${ZLIB_INSTALL_DIR}/include # windows x64
-#        )
-#
-#
-## find libm.h
-#find_library(LIBM_STATIC_LIBRARY
-#        NAMES
-#        libm.a
-#        PATHS
-#        /usr/lib/x86_64-linux-gnu/
-#        /usr/lib
-#        )
-## find math.h header
-#find_path(MATH_INCLUDE_DIRS
-#        NAMES
-#        math.h
-#        PATHS
-#        /usr/include
-#        )
+# find libxml2 static library
+find_library(LIBXML2_STATIC_LIBRARY
+        NAMES libxml2.a libxml2.lib
+        PATHS
+        /usr/lib/x86_64-linux-gnu # default for WSL
+        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/lib # for windows x64
+        REQUIRED
+        )
+# find libxml2 include dirs
+find_path(LIBXML2_INCLUDE_DIRS
+        NAMES
+        libxml/parser.h
+        PATHS
+        /usr/include/ # linux
+        /usr/include/libxml2/ # linux
+        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/include # windows x64
+        )
 
-############################################################
+# find libxslt static library
+find_library(LIBXSLT_STATIC_LIBRARY
+        NAMES libxslt.a libxslt.lib
+        PATHS
+        /usr/lib/x86_64-linux-gnu # default for WSL
+        ${CMAKE_SOURCE_DIR}/libxslt-1.1.26.win32/lib # for windows x64
+        REQUIRED
+        )
+# find libxslt include dirs
+find_path(LIBXSLT_INCLUDE_DIRS
+        NAMES
+        libxslt/xslt.h
+        PATHS
+        /usr/include/ # linux (WSL)
+        ${CMAKE_SOURCE_DIR}/libxslt-1.1.26.win32/include # for windows x64
+        )
+
+# find CURL static library
+find_library(CURL_STATIC_LIBRARY
+        NAMES libcurl.a libcurl.lib libcurl-d_imp.lib
+        PATHS
+        /usr/lib/x86_64-linux-gnu # default for WSL
+        ${CURL_INSTALL_DIR}/lib # for windows x64
+        REQUIRED
+        )
+# find CURL libraries
+find_path(CURL_INCLUDE_DIRS
+        NAMES
+        curl/curl.h
+        PATHS
+        /usr/include/x86_64-linux-gnu/
+        ${CMAKE_SOURCE_DIR}/libxml2-2.7.8.win32/include # windows x64
+        )
+
+# find zlib static library
+find_library(ZLIB_STATIC_LIBRARY
+        NAMES libz.a
+        PATHS
+        /usr/lib/x86_64-linux-gnu # default for WSL
+        ${ZLIB_INSTALL_DIR}/lib # for windows x64
+        REQUIRED
+        )
+# find ZLIB include_dirs
+find_path(ZLIB_INCLUDE_DIRS
+        NAMES
+        zlib/zlib.h zlib.h
+        PATHS
+        /usr/include
+        ${ZLIB_INSTALL_DIR}/include # windows x64
+        )
+
+
+# find libm.h
+find_library(LIBM_STATIC_LIBRARY
+        NAMES
+        libm.a
+        PATHS
+        /usr/lib/x86_64-linux-gnu/
+        /usr/lib
+        )
+# find math.h header
+find_path(MATH_INCLUDE_DIRS
+        NAMES
+        math.h
+        PATHS
+        /usr/include
+        )
+
+###########################################################
 # Compile list of CMAKE_ARGS for raptor
-#
-#set(RAPTOR_SOURCE_DIR ${CMAKE_SOURCE_DIR}/raptor2-2.0.15)
-#set(RAPTOR_BUILD_DIR ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/build)
-#set(RAPTOR_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/install)
-#
-#message(STATUS "${CMAKE_SOURCE_DIR}/raptor2-2.0.15")
 
-#ExternalProject_Add(
-#        raptor2
-#        SOURCE_DIR ${RAPTOR_SOURCE_DIR}
-#        BINARY_DIR ${RAPTOR_BUILD_DIR}
-#
-#        CMAKE_ARGS
-#        -DCMAKE_INSTALL_PREFIX=${RAPTOR_INSTALL_PREFIX}
-#        -DCURL_STATIC_LIBRARY=${CURL_STATIC_LIBRARY}
-#        -DCURL_INCLUDE_DIRS=${CURL_INCLUDE_DIRS}
-#        -DLIBXML2_INCLUDE_DIRS=${LIBXML2_INCLUDE_DIRS}
-#        -DLIBXML2_STATIC_LIBRARY=${LIBXML2_STATIC_LIBRARY}
-#        -DLIBXSLT_STATIC_LIBRARY=${LIBXSLT_STATIC_LIBRARY}
-#        -DLIBXSLT_INCLUDE_DIRS=${LIBXSLT_INCLUDE_DIRS}
-#        -DZLIB_INCLUDE_DIRS=${ZLIB_INCLUDE_DIRS}
-#        -DZLIB_STATIC_LIBRARY=${ZLIB_STATIC_LIBRARY}
-#        -DMATH_INCLUDE_DIRS=${MATH_INCLUDE_DIRS}
-#        -DLIBM_STATIC_LIBRARY=${LIBM_STATIC_LIBRARY}
-#)
+set(RAPTOR_SOURCE_DIR ${CMAKE_SOURCE_DIR}/raptor2-2.0.15)
+set(RAPTOR_BUILD_DIR ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/build)
+set(RAPTOR_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/install)
+
+message(STATUS "${CMAKE_SOURCE_DIR}/raptor2-2.0.15")
+
+ExternalProject_Add(
+        raptor2
+        SOURCE_DIR ${RAPTOR_SOURCE_DIR}
+        BINARY_DIR ${RAPTOR_BUILD_DIR}
+
+        CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=${RAPTOR_INSTALL_PREFIX}
+        -DCURL_STATIC_LIBRARY=${CURL_STATIC_LIBRARY}
+        -DCURL_INCLUDE_DIRS=${CURL_INCLUDE_DIRS}
+        -DLIBXML2_INCLUDE_DIRS=${LIBXML2_INCLUDE_DIRS}
+        -DLIBXML2_STATIC_LIBRARY=${LIBXML2_STATIC_LIBRARY}
+        -DLIBXSLT_STATIC_LIBRARY=${LIBXSLT_STATIC_LIBRARY}
+        -DLIBXSLT_INCLUDE_DIRS=${LIBXSLT_INCLUDE_DIRS}
+        -DZLIB_INCLUDE_DIRS=${ZLIB_INCLUDE_DIRS}
+        -DZLIB_STATIC_LIBRARY=${ZLIB_STATIC_LIBRARY}
+        -DMATH_INCLUDE_DIRS=${MATH_INCLUDE_DIRS}
+        -DLIBM_STATIC_LIBRARY=${LIBM_STATIC_LIBRARY}
+)
 
 #find_library(RAPTOR2_STATIC_LIBRARY)
 #set(RAPTOR2_STATIC_LIBRARY ${RAPTOR_INSTALL_PREFIX}/raptor2)

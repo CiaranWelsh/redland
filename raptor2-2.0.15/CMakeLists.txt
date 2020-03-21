@@ -30,6 +30,7 @@ SET(CMAKE_INCLUDE_CURRENT_DIR 1)
 #FIND_PACKAGE(LibXslt)
 #FIND_PACKAGE(YAJL)
 
+
 if (EXISTS ${CURL_INCLUDE_DIRS})
     SET(CURL_FOUND TRUE)
 endif ()
@@ -50,6 +51,7 @@ INCLUDE_DIRECTORIES(
         ${LIBXSLT_INCLUDE_DIRS}  # is this dependency actually used anywhere???
         ${ZLIB_INCLUDE_DIRS}
         ${MATH_INCLUDE_DIRS}
+
 )
 
 ################################################################

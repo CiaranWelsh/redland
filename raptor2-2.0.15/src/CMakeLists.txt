@@ -184,7 +184,7 @@ ADD_LIBRARY(raptor2
         )
 
 
-TARGET_LINK_LIBRARIES(raptor2
+TARGET_LINK_LIBRARIES(raptor2 PUBLIC
         ${raptor_libxslt_libs}
         ${raptor_libxml_libs}
         ${raptor_yajl_libs}
@@ -203,20 +203,24 @@ message(STATUS "
 
 #-lxml2 -lz -lpthread -lm
 
+target_include_directories(raptor2 PUBLIC
+        ${LIBXML2_INCLUDE_DIRS}
+        )
+
 SET_TARGET_PROPERTIES(
         raptor2
         PROPERTIES
         COMPILE_DEFINITIONS "LIBRDFA_IN_RAPTOR;RAPTOR_INTERNAL;${LIBXML2_DEFINITIONS};${LIBXSLT_DEFINITIONS}"
 )
-SET_TARGET_PROPERTIES(
-        raptor2
-        PROPERTIES
-        COMPILE_FLAGS "-lxml2 -lz -lpthread -lm"
-)
+#SET_TARGET_PROPERTIES(
+#        raptor2
+#        PROPERTIES
+#        COMPILE_FLAGS "-lxml2 -lz -lpthread -lm"
+#)
 
 ADD_EXECUTABLE(turtle_lexer_test turtle_lexer.c)
 add_dependencies(turtle_lexer_test raptor2)
-TARGET_LINK_LIBRARIES(turtle_lexer_test raptor2)
+TARGET_LINK_LIBRARIES(turtle_lexer_test PRIVATE raptor2)
 
 #IF (NOT WIN32)
 #    # This currently cannot be built on Windows with DLL linkage
@@ -231,7 +235,8 @@ TARGET_LINK_LIBRARIES(turtle_lexer_test raptor2)
 #ENDIF (NOT WIN32)
 
 ADD_EXECUTABLE(raptor_parse_test raptor_parse.c)
-TARGET_LINK_LIBRARIES(raptor_parse_test raptor2
+TARGET_LINK_LIBRARIES(raptor_parse_test PRIVATE
+        raptor2
         ${LIBM_STATIC_LIBRARY}
         lzma
         )
@@ -241,11 +246,11 @@ TARGET_INCLUDE_DIRECTORIES(raptor_parse_test PRIVATE raptor2
 ADD_TEST(raptor_parse_test raptor_parse_test)
 
 ADD_EXECUTABLE(raptor_rfc2396_test raptor_rfc2396.c)
-TARGET_LINK_LIBRARIES(raptor_rfc2396_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_rfc2396_test PRIVATE raptor2)
 ADD_TEST(raptor_rfc2396_test raptor_rfc2396_test)
 
 ADD_EXECUTABLE(raptor_uri_test raptor_uri.c)
-TARGET_LINK_LIBRARIES(raptor_uri_test
+TARGET_LINK_LIBRARIES(raptor_uri_test PRIVATE
         raptor2
         ${LIBXML2_STATIC_LIBRARY}
         m
@@ -256,7 +261,8 @@ target_include_directories(raptor_uri_test PRIVATE
 ADD_TEST(raptor_uri_test raptor_uri_test)
 
 ADD_EXECUTABLE(raptor_namespace_test raptor_namespace.c)
-TARGET_LINK_LIBRARIES(raptor_namespace_test raptor2
+TARGET_LINK_LIBRARIES(raptor_namespace_test PRIVATE
+        raptor2
         ${LIBXML2_STATIC_LIBRARY}
         ${ZLIB_STATIC_LIBRARY}
         ${LIBM_STATIC_LIBRARY}
@@ -273,23 +279,23 @@ ADD_TEST(raptor_namespace_test raptor_namespace_test)
 
 
 ADD_EXECUTABLE(strcasecmp_test strcasecmp.c)
-TARGET_LINK_LIBRARIES(strcasecmp_test raptor2)
+TARGET_LINK_LIBRARIES(strcasecmp_test PRIVATE raptor2)
 ADD_TEST(strcasecmp_test strcasecmp_test)
 
 ADD_EXECUTABLE(raptor_www_test raptor_www_test.c)
-TARGET_LINK_LIBRARIES(raptor_www_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_www_test PRIVATE raptor2)
 ADD_TEST(raptor_www_test raptor_www_test)
 
 ADD_EXECUTABLE(raptor_sequence_test raptor_sequence.c)
-TARGET_LINK_LIBRARIES(raptor_sequence_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_sequence_test PRIVATE raptor2)
 ADD_TEST(raptor_sequence_test raptor_sequence_test)
 
 ADD_EXECUTABLE(raptor_stringbuffer_test raptor_stringbuffer.c)
-TARGET_LINK_LIBRARIES(raptor_stringbuffer_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_stringbuffer_test PRIVATE raptor2)
 ADD_TEST(raptor_stringbuffer_test raptor_stringbuffer_test)
 
 ADD_EXECUTABLE(raptor_iostream_test raptor_iostream.c)
-TARGET_LINK_LIBRARIES(raptor_iostream_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_iostream_test PRIVATE raptor2)
 ADD_TEST(raptor_iostream_test raptor_iostream_test)
 
 ADD_EXECUTABLE(raptor_xml_writer_test raptor_xml_writer.c)
@@ -311,32 +317,23 @@ target_include_directories(raptor_xml_writer_test
 ADD_TEST(raptor_xml_writer_test raptor_xml_writer_test)
 
 ADD_EXECUTABLE(raptor_turtle_writer_test raptor_turtle_writer.c)
-TARGET_LINK_LIBRARIES(raptor_turtle_writer_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_turtle_writer_test PRIVATE raptor2)
 ADD_TEST(raptor_turtle_writer_test raptor_turtle_writer_test)
 
 
 ADD_EXECUTABLE(raptor_avltree_test raptor_avltree.c)
-TARGET_LINK_LIBRARIES(raptor_avltree_test raptor2 )
-#set_target_properties(raptor_avltree_test PROPERTIES COMPILE_FLAGS "-lm")
-
-target_compile_options(raptor_avltree_test PRIVATE "-lm" )
-
-#TARGET_LINK_LIBRARIES(raptor_avltree_test ${LIBM_STATIC_LIBRARY})
-
-MESSAGE(STATUS "LIBM_STATIC_LIBRARY ${LIBM_STATIC_LIBRARY}")
-MESSAGE(STATUS "LIBM_INCLUDE_DIRS ${LIBM_INCLUDE_DIRS}")
-
-
-
-#target_include_directories(raptor_avltree_test PRIVATE ${LIBM_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(raptor_avltree_test PRIVATE raptor2 )
+TARGET_LINK_LIBRARIES(raptor_avltree_test PRIVATE ${LIBM_STATIC_LIBRARY})
+target_link_libraries(raptor_avltree_test PRIVATE m)
+target_include_directories(raptor_avltree_test PRIVATE ${LIBM_INCLUDE_DIRS})
 ADD_TEST(raptor_avltree_test raptor_avltree_test)
 
 ADD_EXECUTABLE(raptor_term_test raptor_term.c)
-TARGET_LINK_LIBRARIES(raptor_term_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_term_test PRIVATE raptor2)
 ADD_TEST(raptor_term_test raptor_term_test)
 
 ADD_EXECUTABLE(raptor_permute_test raptor_permute_test.c)
-TARGET_LINK_LIBRARIES(raptor_permute_test raptor2)
+TARGET_LINK_LIBRARIES(raptor_permute_test PRIVATE raptor2)
 ADD_TEST(raptor_permute_test raptor_permute_test)
 
 SET_TARGET_PROPERTIES(
@@ -362,16 +359,16 @@ SET_TARGET_PROPERTIES(
 
 IF (RAPTOR_PARSER_RDFXML)
     ADD_EXECUTABLE(raptor_set_test raptor_set.c)
-    TARGET_LINK_LIBRARIES(raptor_set_test raptor2
+    TARGET_LINK_LIBRARIES(raptor_set_test PRIVATE raptor2
             ${ZLIB_STATIC_LIBRARY}
             )
-    TARGET_INCLUDE_DIRECTORIES(raptor_set_test PUBLIC
+    TARGET_INCLUDE_DIRECTORIES(raptor_set_test PRIVATE
             ${ZLIB_INCLUDE_DIRS}
 )
     ADD_TEST(raptor_set_test raptor_set_test)
 
     ADD_EXECUTABLE(raptor_xml_test raptor_xml.c)
-    TARGET_LINK_LIBRARIES(raptor_xml_test
+    TARGET_LINK_LIBRARIES(raptor_xml_test PRIVATE
             raptor2
             m)
     ADD_TEST(raptor_xml_test raptor_xml_test)
