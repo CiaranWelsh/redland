@@ -1201,7 +1201,6 @@ struct raptor_uri_detail_s
 
 /* for time_t */
 #ifdef TIME_WITH_SYS_TIME
-# include <sys/time.h>
 # include <time.h>
 #else
 # ifdef HAVE_SYS_TIME_H

@@ -228,7 +228,6 @@ add_library(raptor2
         ${raptor_parsedate_sources}
         )
 
-
 target_link_libraries(raptor2 PUBLIC
         ${raptor_libxslt_libs}
         ${raptor_libxml_libs}
@@ -238,9 +237,11 @@ target_link_libraries(raptor2 PUBLIC
         ${LIBXML2_STATIC_LIBRARY}
         ${ZLIB_STATIC_LIBRARY}
         ${LIBXML2_EXTRA_LIBS}
+        ${LIBICONV_STATIC_LIBRARY}
         )
 
-
+set(LIBXML2_STATIC_LIBRARY ${LIBXML2_STATIC_LIBRARY})
+set(LIBXML2_INCLUDE_DIRS ${LIBXML2_INCLUDE_DIRS})
 target_include_directories(raptor2 PUBLIC
         ${LIBXML2_INCLUDE_DIRS}
         )

@@ -50,7 +50,7 @@ INCLUDE_DIRECTORIES(
         ${LIBXML2_INCLUDE_DIRS}
         ${LIBXSLT_INCLUDE_DIRS}  # is this dependency actually used anywhere???
         ${ZLIB_INCLUDE_DIRS}
-        ${MATH_INCLUDE_DIRS}
+        ${LIBICONV_INCLUDE_DIRS}
 
 )
 
@@ -387,6 +387,8 @@ message(STATUS "
     	ZLIB_STATIC_LIBRARY                 ${ZLIB_STATIC_LIBRARY}
     	MATH_INCLUDE_DIRS                   ${MATH_INCLUDE_DIRS}
     	LIBM_STATIC_LIBRARY                 ${LIBM_STATIC_LIBRARY}
+    	LIBICONV_STATIC_LIBRARY             ${LIBICONV_STATIC_LIBRARY}
+    	LIBICONV_INCLUDE_DIRS               ${LIBICONV_INCLUDE_DIRS}
 
     Dependency Found variables
         CURL_FOUND                          ${CURL_FOUND}
@@ -415,6 +417,8 @@ message(STATUS "
     	RAPTOR_SERIALIZER_HTML					${RAPTOR_SERIALIZER_HTML}
     	RAPTOR_SERIALIZER_JSON					${RAPTOR_SERIALIZER_JSON}
     	RAPTOR_SERIALIZER_NQUADS				${RAPTOR_SERIALIZER_NQUADS}
+
+
 ")
 
 
