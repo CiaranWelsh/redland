@@ -43,6 +43,9 @@
 #include "raptor_rss.h"
 
 
+
+
+
 typedef struct {
   raptor_world* world;
   raptor_term* term;
@@ -1599,7 +1602,7 @@ raptor_rss10_ensure_atom_feed_valid(raptor_rss10_serializer_context *rss_seriali
   time_t now = 0;
   int size;
   
-#ifdef HAVE_GETTIMEOFDAY
+#ifdef __linux__
   struct timeval tv;
   if(!gettimeofday(&tv, NULL))
     now = tv.tv_sec;
