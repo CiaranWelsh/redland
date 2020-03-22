@@ -268,19 +268,7 @@ SET(RAPTOR_SERIALIZER_NQUADS TRUE
 
 ################################################################
 
-#CONFIGURE_FILE(
-#	src/raptor_config_cmake.h.in
-#	src/raptor_config.h
-#	@ONLY
-#)
 
-ADD_DEFINITIONS(-DHAVE_CONFIG_H)
-
-#CONFIGURE_FILE(
-#	src/raptor2.h.in
-#	src/raptor2.h
-#	@ONLY
-#)
 
 # On Windows, the test/utility programs usually have DLL dependencies that
 # make them cumbersome to invoke within IDE environments, so we enable the

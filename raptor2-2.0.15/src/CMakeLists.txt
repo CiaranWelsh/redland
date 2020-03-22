@@ -162,6 +162,14 @@ endif (RAPTOR_PARSEDATE)
 # Build the raptor2 target
 #
 
+# configure the *.in files
+
+configure_file(raptor_config_cmake.h.in raptor_config.h @ONLY)
+
+add_definitions(-DHAVE_CONFIG_H)
+
+configure_file(raptor2.h.in raptor2.h @ONLY)
+
 add_library(raptor2
         raptor_avltree.c
         raptor_concepts.c
@@ -194,7 +202,9 @@ add_library(raptor2
         turtle_common.c
 
         # added by ciaran welsh
-        raptor2.h
+        # todo figure out whether these sources are actually needed?
+        #  siince I added them myself
+        #        raptor2.h
         sort_r.c
         sort_r.h
         ssort.h
@@ -238,13 +248,12 @@ target_link_libraries(raptor2 PUBLIC
         ${ZLIB_STATIC_LIBRARY}
         ${LIBXML2_EXTRA_LIBS}
         ${LIBICONV_STATIC_LIBRARY}
+        ${CMAKE_DL_LIBS} # defines libdl libraries
         )
 
 set(LIBXML2_STATIC_LIBRARY ${LIBXML2_STATIC_LIBRARY})
 set(LIBXML2_INCLUDE_DIRS ${LIBXML2_INCLUDE_DIRS})
-target_include_directories(raptor2 PUBLIC
-        ${LIBXML2_INCLUDE_DIRS}
-        )
+target_include_directories(raptor2 PUBLIC ${LIBXML2_INCLUDE_DIRS})
 
 set_target_properties(
         raptor2
@@ -430,7 +439,7 @@ if (RAPTOR_PARSER_RDFXML)
     #raptor_xml_test
     add_executable(raptor_xml_test raptor_xml.c)
     add_dependencies(raptor_xml_test raptor2)
-    target_link_libraries(raptor_xml_test PRIVATE raptor2 )
+    target_link_libraries(raptor_xml_test PRIVATE raptor2)
     add_test(raptor_xml_test raptor_xml_test)
 
     set_target_properties(
