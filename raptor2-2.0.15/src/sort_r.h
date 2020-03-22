@@ -43,77 +43,79 @@ void sort_r(void *base, size_t nel, size_t width,
 #  define NESTED_QSORT
 #endif
 
+struct sort_r_data {
+    void *arg;
+
+    int (*compar)(const void *_a, const void *_b, void *_arg);
+};
+
+static inline int sort_r_arg_swap(void *s, const void *a, const void *b)
+{
+  struct sort_r_data *ss = (struct sort_r_data*)s;
+  return (ss->compar)(a, b, ss->arg);
+}
 
 #if defined NESTED_QSORT
 
-  static inline void sort_r(void *base, size_t nel, size_t width,
-                            int (*compar)(const void *_a, const void *_b, void *aarg),
-                            void *arg)
+static inline void sort_r(void *base, size_t nel, size_t width,
+                          int (*compar)(const void *_a, const void *_b, void *aarg),
+                          void *arg)
+{
+  int nested_cmp(const void *a, const void *b)
   {
-    int nested_cmp(const void *a, const void *b)
-    {
-      return compar(a, b, arg);
-    }
-
-    qsort(base, nel, width, nested_cmp);
+    return compar(a, b, arg);
   }
+
+  qsort(base, nel, width, nested_cmp);
+}
 
 #else /* !NESTED_QSORT */
 
-  /* Declare structs and functions */
-  #if defined _SORT_R_BSD
+/* Declare structs and functions */
+#if defined _SORT_R_BSD
 
-    /* BSD requires argument swap */
-    extern void qsort_r(void *base, size_t nel, size_t width, void *thunk,
-                        int (*compar)(void *_thunk, const void *_a, const void *_b));
+/* BSD requires argument swap */
+extern void qsort_r(void *base, size_t nel, size_t width, void *thunk,
+                    int (*compar)(void *_thunk, const void *_a, const void *_b));
 
-    struct sort_r_data
-    {
-      void *arg;
-      int (*compar)(const void *_a, const void *_b, void *_arg);
-    };
 
-    static inline int sort_r_arg_swap(void *s, const void *a, const void *b)
-    {
-      struct sort_r_data *ss = (struct sort_r_data*)s;
-      return (ss->compar)(a, b, ss->arg);
-    }
 
-  #elif defined _SORT_R_LINUX
 
-    typedef int(* __compar_d_fn_t)(const void *, const void *, void *);
-    extern void qsort_r(void *base, size_t nel, size_t width,
-                        __compar_d_fn_t __compar, void *arg)
-      __attribute__((nonnull (1, 4)));
 
-  #endif
+#elif defined _SORT_R_LINUX
 
-  /* implementation */
+typedef int(* __compar_d_fn_t)(const void *, const void *, void *);
+extern void qsort_r(void *base, size_t nel, size_t width,
+                    __compar_d_fn_t __compar, void *arg)
+  __attribute__((nonnull (1, 4)));
 
-  static inline void sort_r(void *base, size_t nel, size_t width,
-                            int (*compar)(const void *_a, const void *_b, void *_arg),
-                            void *arg)
-  {
-    #if defined _SORT_R_LINUX
+#endif
 
-      qsort_r(base, nel, width, compar, arg);
+/* implementation */
 
-    #elif defined _SORT_R_BSD
+static inline void sort_r(void *base, size_t nel, size_t width,
+                          int (*compar)(const void *_a, const void *_b, void *_arg),
+                          void *arg) {
+#if defined _SORT_R_LINUX
 
-      struct sort_r_data tmp;
-      tmp.arg = arg;
-      tmp.compar = compar;
-      qsort_r(base, nel, width, &tmp, sort_r_arg_swap);
+    qsort_r(base, nel, width, compar, arg);
 
-    #else /* defined _SORT_R_WINDOWS */
+#elif defined _SORT_R_BSD
 
-      struct sort_r_data tmp;
-      tmp.arg = arg;
-      tmp.compar = compar;
-      qsort_s(base, nel, width, sort_r_arg_swap, &tmp);
+    struct sort_r_data tmp;
+    tmp.arg = arg;
+    tmp.compar = compar;
+    qsort_r(base, nel, width, &tmp, sort_r_arg_swap);
 
-    #endif
-  }
+#else /* defined _SORT_R_WINDOWS */
+
+    struct sort_r_data tmp;
+    tmp.arg = arg;
+    tmp.compar = compar;
+    qsort_s(base, nel, width, sort_r_arg_swap, &tmp);
+
+#endif
+}
 
 #endif /* !NESTED_QSORT */
 
