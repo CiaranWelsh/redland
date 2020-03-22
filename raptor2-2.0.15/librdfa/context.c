@@ -157,9 +157,9 @@ void rdfa_init_context(rdfacontext* context)
 #ifdef LIBRDFA_IN_RAPTOR
 #define DECLARE_URI_MAPPING(context, prefix, value)                     \
 do {                                                                    \
-    raptor_namespace_stack* nstack = &context->sax2->namespaces;        \
+    raptor_namespace_stack* nstack = &(context)->sax2->namespaces;        \
     raptor_namespace* ns = raptor_new_namespace(nstack,                 \
-      (const unsigned char *)prefix, (const unsigned char*)value, 0);   \
+      (const unsigned char *)(prefix), (const unsigned char*)(value), 0);   \
     raptor_namespaces_start_namespace(nstack, ns);                      \
     } while(0)
 #else

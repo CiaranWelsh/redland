@@ -41,8 +41,10 @@
 #ifdef HAVE_STDDEF_H
 #include <stddef.h>
 #endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
+#ifndef WIN32
+#   ifdef HAVE_UNISTD_H
+#   include <unistd.h>
+#   endif
 #endif
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
@@ -51,9 +53,12 @@
 #include <sys/stat.h>
 #endif
 
+
+
 /* Raptor includes */
 #include "raptor2.h"
 #include "raptor_internal.h"
+
 
 
 /* Symbian OS uses similar path mappings as Windows but does not necessarily have the WIN32 flag defined */
