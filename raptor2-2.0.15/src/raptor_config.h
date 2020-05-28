@@ -14,7 +14,7 @@
 #define HAVE_C99_VSNPRINTF 1
 
 /* Have curl/curl.h */
-/* #undef HAVE_CURL_CURL_H */
+#define HAVE_CURL_CURL_H 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
@@ -65,7 +65,7 @@
 #define HAVE_LIBXML_SAX2_H 1
 
 /* Define to 1 if you have the <libxslt/xslt.h> header file. */
-/* #undef HAVE_LIBXSLT_XSLT_H */
+#define HAVE_LIBXSLT_XSLT_H 1
 
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1
@@ -83,7 +83,7 @@
 /* #undef HAVE_QSORT_S */
 
 /* Raptor raptor_parse_date available */
-#define HAVE_RAPTOR_PARSE_DATE 1
+/* #undef HAVE_RAPTOR_PARSE_DATE */
 
 /* Define to 1 if you have the `setjmp' function. */
 #define HAVE_SETJMP 1
@@ -212,7 +212,7 @@
 #define RAPTOR_MIN_VERSION_DECIMAL 20000
 
 /* Building GRDDL parser */
-/* #undef RAPTOR_PARSER_GRDDL */
+#define RAPTOR_PARSER_GRDDL 1
 
 /* Building guess parser */
 #define RAPTOR_PARSER_GUESS 1
@@ -284,13 +284,13 @@
 #define RAPTOR_VERSION_RELEASE 15
 
 /* Have libcurl WWW library */
-/* #undef RAPTOR_WWW_LIBCURL */
+#define RAPTOR_WWW_LIBCURL 1
 
 /* Have libfetch WWW library */
 /* #undef RAPTOR_WWW_LIBFETCH */
 
 /* Have libxml available as a WWW library */
-#define RAPTOR_WWW_LIBXML 1
+/* #undef RAPTOR_WWW_LIBXML */
 
 /* No WWW library */
 /* #undef RAPTOR_WWW_NONE */

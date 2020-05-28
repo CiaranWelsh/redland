@@ -111,7 +111,8 @@ build_triplet = @build@
 host_triplet = @host@
 subdir = tests/sparql/SyntaxDev/Syntax-SPARQL
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/build/libtool.m4 \
+am__aclocal_m4_deps = $(top_srcdir)/build/gtk-doc.m4 \
+	$(top_srcdir)/build/libtool.m4 \
 	$(top_srcdir)/build/ltoptions.m4 \
 	$(top_srcdir)/build/ltsugar.m4 \
 	$(top_srcdir)/build/ltversion.m4 \

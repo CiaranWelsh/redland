@@ -1,4 +1,4 @@
-prefix=/home/ciaran/Software/redland/redland-1.0.17/install
+prefix=/mnt/d/redland/redland-1.0.17/install.linux
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

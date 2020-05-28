@@ -211,7 +211,7 @@ add_library(raptor2
         raptor_ntriples.c
         raptor_escaped.c
         raptor_www_libxml.c
-        #        raptor_www_curl.c
+        raptor_www_curl.c
 
         ${raptor_parser_rdfxml_sources}
         ${raptor_parser_ntriples_nquads_sources}
@@ -238,16 +238,39 @@ add_library(raptor2
         ${raptor_parsedate_sources}
         )
 
+target_include_directories(raptor2 PUBLIC
+        /usr/include/yajl
+        )
+
 target_link_libraries(raptor2 PUBLIC
         ${raptor_libxslt_libs}
         ${raptor_libxml_libs}
         ${raptor_yajl_libs}
         ${raptor_www_libs}
+        iconv
+        xml2
+        xslt
+        z
+        lzma
+        c
+        pthread
+        gss
+        m
+        yajl
+        # These and others are needed for WWW support. These are hard to find/install so skip
+#        curl
+#        ssl
+#        crypto
+#        dl
+        idn2
+#        nghttp2
 
-        ${LIBXML2_STATIC_LIBRARY}
-        ${ZLIB_STATIC_LIBRARY}
-        ${LIBXML2_EXTRA_LIBS}
-        ${LIBICONV_STATIC_LIBRARY}
+#        -lbcrypt -lcrypt32 -lcrypto \ # from https://github.com/curl/curl/issues/2516
+#-lcurl -lgdi32 -lnghttp2 -lssh2 -lssl -lwldap32 -lws2_32 -lz
+#        ${LIBXML2_STATIC_LIBRARY}
+#        ${ZLIB_STATIC_LIBRARY}
+#        ${LIBXML2_EXTRA_LIBS}
+#        ${LIBICONV_STATIC_LIBRARY}
         ${CMAKE_DL_LIBS} # defines libdl libraries
         )
 

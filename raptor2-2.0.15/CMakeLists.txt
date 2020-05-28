@@ -28,7 +28,7 @@ SET(CMAKE_INCLUDE_CURRENT_DIR 1)
 #FIND_PACKAGE(CURL)
 #FIND_PACKAGE(LibXml2)
 #FIND_PACKAGE(LibXslt)
-#FIND_PACKAGE(YAJL)
+#FIND_PACKAGE(YAJL REQUIRED)
 
 
 if (EXISTS ${CURL_INCLUDE_DIRS})
@@ -43,15 +43,44 @@ endif ()
 if (EXISTS ${ZLIB_STATIC_LIBRARY})
     SET(ZLIB_FOUND TRUE)
 endif ()
+if (EXISTS ${YAJL_STATIC_LIBRARY})
+    MESSAGE(STATUS "FOUNDASDFASDFASDF")
+    SET(YAJL_FOUND TRUE)
+endif ()
+
+if (NOT EXISTS ${EXPAT_INCLUDE_DIRS})
+    # NON ESSENTIAL, LIBXML2 USED INSTEAD
+    MESSAGE(WARNING "EXPAT_INCLUDE_DIRS ${EXPAT_INCLUDE_DIRS} NOT EXIST")
+ENDIF()
+
+if (NOT EXISTS ${LIBXML2_INCLUDE_DIRS})
+    MESSAGE(FATAL_ERROR "LIBXML2_INCLUDE_DIRS ${LIBXML2_INCLUDE_DIRS} NOT EXIST")
+ENDIF()
+
+if (NOT EXISTS ${LIBXSLT_INCLUDE_DIRS})
+    MESSAGE(FATAL_ERROR "LIBXSLT_INCLUDE_DIRS ${LIBXSLT_INCLUDE_DIRS} NOT EXIST")
+ENDIF()
+
+if (NOT EXISTS ${ZLIB_INCLUDE_DIRS})
+    MESSAGE(FATAL_ERROR "ZLIB_INCLUDE_DIRS ${ZLIB_INCLUDE_DIRS} NOT EXIST")
+ENDIF()
+
+#if (NOT EXISTS ${LIBICONV_INCLUDE_DIRS})
+#    MESSAGE(FATAL_ERROR "LIBICONV_INCLUDE_DIRS ${LIBICONV_INCLUDE_DIRS} NOT EXIST")
+#ENDIF()
+
+if (NOT EXISTS ${YAJL_INCLUDE_DIRS})
+    MESSAGE(FATAL_ERROR "YAJL_INCLUDE_DIRS ${YAJL_INCLUDE_DIRS} NOT EXIST")
+ENDIF()
 
 INCLUDE_DIRECTORIES(
-        ${CURL_INCLUDE_DIRS}
+        #        ${CURL_INCLUDE_DIRS}
         ${EXPAT_INCLUDE_DIRS}
         ${LIBXML2_INCLUDE_DIRS}
         ${LIBXSLT_INCLUDE_DIRS}  # is this dependency actually used anywhere???
         ${ZLIB_INCLUDE_DIRS}
         ${LIBICONV_INCLUDE_DIRS}
-
+        ${YAJL_INCLUDE_DIRS}
 )
 
 ################################################################
@@ -168,8 +197,7 @@ ENDIF (LIBXML2_FOUND)
 # (Note: The CMake GUI displays these in alphabetical order, regardless of
 # the order we use here)
 
-SET(BUILD_SHARED_LIBS OFF CACHE BOOL
-        "Build shared libraries instead of static ones.")
+SET(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries instead of static ones.")
 
 # change from the original to always build both static and shared
 SET(RAPTOR_STATIC TRUE)
@@ -179,8 +207,7 @@ IF (LIBXML2_FOUND)
     SET(RAPTOR_XML_INIT libxml)
 ENDIF (LIBXML2_FOUND)
 
-SET(RAPTOR_XML ${RAPTOR_XML_INIT} CACHE STRING
-        "Which XML library to use (any of \"libxml\", \"none\").")
+SET(RAPTOR_XML ${RAPTOR_XML_INIT} CACHE STRING "Which XML library to use (any of \"libxml\", \"none\").")
 
 SET(RAPTOR_XML_DEFINE RAPTOR_XML_NONE)
 IF (RAPTOR_XML STREQUAL "libxml")
@@ -195,8 +222,7 @@ IF (CURL_FOUND)
     SET(RAPTOR_WWW_INIT curl)
 ENDIF (CURL_FOUND)
 
-SET(RAPTOR_WWW ${RAPTOR_WWW_INIT} CACHE STRING
-        "Which WWW library to use (any of \"curl\", \"xml\", \"none\").")
+SET(RAPTOR_WWW ${RAPTOR_WWW_INIT} CACHE STRING "Which WWW library to use (any of \"curl\", \"xml\", \"none\").")
 
 SET(RAPTOR_WWW_DEFINE RAPTOR_WWW_NONE)
 IF (RAPTOR_WWW STREQUAL "curl")
@@ -224,50 +250,29 @@ IF (LIBXML2_FOUND AND LIBXSLT_FOUND)
     SET(RAPTOR_PARSER_GRDDL_INIT TRUE)
 ENDIF (LIBXML2_FOUND AND LIBXSLT_FOUND)
 
-SET(RAPTOR_PARSER_RDFXML ${RAPTOR_PARSER_RDFXML_INIT}
-        CACHE BOOL "Build RDF/XML parser.")
-SET(RAPTOR_PARSER_NTRIPLES TRUE
-        CACHE BOOL "Build N-Triples parser.")
-SET(RAPTOR_PARSER_TURTLE TRUE
-        CACHE BOOL "Build Turtle parser.")
-SET(RAPTOR_PARSER_TRIG TRUE
-        CACHE BOOL "Build TRiG parser.")
-SET(RAPTOR_PARSER_RSS ${LIBXML2_FOUND}
-        CACHE BOOL "Build RSS Tag Soup parser.")
-SET(RAPTOR_PARSER_GRDDL ${RAPTOR_PARSER_GRDDL_INIT}
-        CACHE BOOL "Build GRDDL parser.")
-SET(RAPTOR_PARSER_GUESS TRUE
-        CACHE BOOL "Build guess parser.")
-SET(RAPTOR_PARSER_RDFA ${LIBXML2_FOUND}
-        CACHE BOOL "Build RDFA parser.")
-SET(RAPTOR_PARSER_JSON ${YAJL_FOUND}
-        CACHE BOOL "Build JSON parser.")
-SET(RAPTOR_PARSER_NQUADS TRUE
-        CACHE BOOL "Build N-Quads parser.")
+SET(RAPTOR_PARSER_RDFXML ${RAPTOR_PARSER_RDFXML_INIT} CACHE BOOL "Build RDF/XML parser.")
+SET(RAPTOR_PARSER_NTRIPLES TRUE CACHE BOOL "Build N-Triples parser.")
+SET(RAPTOR_PARSER_TURTLE TRUE CACHE BOOL "Build Turtle parser.")
+SET(RAPTOR_PARSER_TRIG TRUE CACHE BOOL "Build TRiG parser.")
+SET(RAPTOR_PARSER_RSS ${LIBXML2_FOUND} CACHE BOOL "Build RSS Tag Soup parser.")
+SET(RAPTOR_PARSER_GRDDL ${RAPTOR_PARSER_GRDDL_INIT} CACHE BOOL "Build GRDDL parser.")
+SET(RAPTOR_PARSER_GUESS TRUE CACHE BOOL "Build guess parser.")
+SET(RAPTOR_PARSER_RDFA ${LIBXML2_FOUND} CACHE BOOL "Build RDFA parser.")
+SET(RAPTOR_PARSER_JSON ${YAJL_FOUND} CACHE BOOL "Build JSON parser.")
+SET(RAPTOR_PARSER_NQUADS TRUE CACHE BOOL "Build N-Quads parser.")
 
-SET(RAPTOR_SERIALIZER_RDFXML TRUE
-        CACHE BOOL "Build RDF/XML serializer.")
-SET(RAPTOR_SERIALIZER_NTRIPLES TRUE
-        CACHE BOOL "Build N-Triples serializer.")
-SET(RAPTOR_SERIALIZER_RDFXML_ABBREV TRUE
-        CACHE BOOL "Build RDF/XML-abbreviated serializer.")
-SET(RAPTOR_SERIALIZER_TURTLE TRUE
-        CACHE BOOL "Build Turtle serializer.")
-SET(RAPTOR_SERIALIZER_RSS_1_0 TRUE
-        CACHE BOOL "Build RSS 1.0 serializer.")
-SET(RAPTOR_SERIALIZER_ATOM TRUE
-        CACHE BOOL "Build Atom 1.0 serializer.")
-SET(RAPTOR_SERIALIZER_DOT TRUE
-        CACHE BOOL "Build GraphViz DOT serializer.")
-SET(RAPTOR_SERIALIZER_HTML TRUE
-        CACHE BOOL "Build HTML Table serializer.")
-SET(RAPTOR_SERIALIZER_JSON TRUE
-        CACHE BOOL "Build JSON serializer.")
-SET(RAPTOR_SERIALIZER_NQUADS TRUE
-        CACHE BOOL "Build N-Quads serializer.")
+SET(RAPTOR_SERIALIZER_RDFXML TRUE CACHE BOOL "Build RDF/XML serializer.")
+SET(RAPTOR_SERIALIZER_NTRIPLES TRUE CACHE BOOL "Build N-Triples serializer.")
+SET(RAPTOR_SERIALIZER_RDFXML_ABBREV TRUE CACHE BOOL "Build RDF/XML-abbreviated serializer.")
+SET(RAPTOR_SERIALIZER_TURTLE TRUE CACHE BOOL "Build Turtle serializer.")
+SET(RAPTOR_SERIALIZER_RSS_1_0 TRUE CACHE BOOL "Build RSS 1.0 serializer.")
+SET(RAPTOR_SERIALIZER_ATOM TRUE CACHE BOOL "Build Atom 1.0 serializer.")
+SET(RAPTOR_SERIALIZER_DOT TRUE CACHE BOOL "Build GraphViz DOT serializer.")
+SET(RAPTOR_SERIALIZER_HTML TRUE CACHE BOOL "Build HTML Table serializer.")
+SET(RAPTOR_SERIALIZER_JSON TRUE CACHE BOOL "Build JSON serializer.")
+SET(RAPTOR_SERIALIZER_NQUADS TRUE CACHE BOOL "Build N-Quads serializer.")
 
 ################################################################
-
 
 
 # On Windows, the test/utility programs usually have DLL dependencies that
@@ -285,7 +290,10 @@ IF (CMAKE_GENERATOR MATCHES "Makefiles")
 ENDIF (CMAKE_GENERATOR MATCHES "Makefiles")
 
 SUBDIRS(src)
-SUBDIRS(utils)
+
+# comment out utils because 1) we don't want to use them and 2) they
+# do not compile with cmake script (yet). Note they work fine with autotools build system
+#SUBDIRS(utils)
 
 ################################################################
 
@@ -294,8 +302,10 @@ IF (NOT JING STREQUAL "JING-NOTFOUND")
     SET(HAVE_JING TRUE)
 ENDIF (NOT JING STREQUAL "JING-NOTFOUND")
 
-SET(RAPPER ${CMAKE_BINARY_DIR}/utils/rapper)
-SET(RDFDIFF ${CMAKE_BINARY_DIR}/utils/rdfdiff)
+# commented out because we do not want these executables, only the library.
+# and these do not compile via cmake (though they do via makefile?)
+#SET(RAPPER ${CMAKE_BINARY_DIR}/utils/rapper)
+#SET(RDFDIFF ${CMAKE_BINARY_DIR}/utils/rdfdiff)
 
 MACRO(RAPPER_TEST NAME_PREFIX COMMAND OUTPUT REFERENCE)
     FILE(WRITE ${CMAKE_CURRENT_BINARY_DIR}/test-${NAME_PREFIX}.cmake "
@@ -357,7 +367,7 @@ SUBDIRS(tests/rdfa)
 SUBDIRS(tests/rdfa11)
 SUBDIRS(tests/rdfxml)
 SUBDIRS(tests/trig)
-#SUBDIRS(tests/turtle)	# TODO
+#SUBDIRS(tests/turtle) // no cmake in turtle
 
 # end raptor/CMakeLists.txt
 

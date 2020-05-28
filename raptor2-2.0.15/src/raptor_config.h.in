@@ -153,8 +153,7 @@
 /* Is __FUNCTION__ available */
 #undef HAVE___FUNCTION__
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
 /* Define to 1 if maintainer mode is enabled. */
@@ -162,9 +161,6 @@
 
 /* need 'extern int optind' declaration? */
 #undef NEED_OPTIND_DECLARATION
-
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-#undef NO_MINUS_C_MINUS_O
 
 /* Name of package */
 #undef PACKAGE

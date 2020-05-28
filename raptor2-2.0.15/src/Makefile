@@ -121,7 +121,7 @@ am__append_6 = ntriples_parse.c
 #am__append_7 = ntriples_parse.c
 am__append_8 = raptor_rss_common.c raptor_rss.h
 am__append_9 = raptor_rss.c
-#am__append_10 = raptor_grddl.c
+am__append_10 = raptor_grddl.c
 am__append_11 = raptor_guess.c
 am__append_12 = raptor_librdfa.c
 #am__append_13 = raptor_json.c
@@ -139,8 +139,8 @@ am__append_22 = raptor_serialize_dot.c
 am__append_23 = raptor_serialize_html.c
 am__append_24 = raptor_serialize_json.c
 #am__append_25 = strcasecmp.c
-am__append_26 = parsedate.c
-am__append_27 = parsedate.c
+#am__append_26 = parsedate.c
+#am__append_27 = parsedate.c
 am__append_28 = -DLIBRDFA_IN_RAPTOR -I$(top_srcdir)/librdfa
 am__append_29 = $(top_builddir)/librdfa/librdfa.la
 am__append_30 = git-version.h
@@ -190,7 +190,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)" \
 	"$(DESTDIR)$(pkgincludedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libraptor2_la_DEPENDENCIES = $(am__append_29)  ${LIBOBJDIR}raptor_www_libxml$U.lo
+libraptor2_la_DEPENDENCIES = $(am__append_29)  ${LIBOBJDIR}raptor_www_curl$U.lo
 am__libraptor2_la_SOURCES_DIST = raptor_parse.c raptor_serialize.c \
 	raptor_rfc2396.c raptor_uri.c raptor_log.c raptor_locator.c \
 	raptor_namespace.c raptor_qname.c raptor_option.c \
@@ -221,7 +221,7 @@ am__objects_5 = ntriples_parse.lo
 #am__objects_6 = ntriples_parse.lo
 am__objects_7 = raptor_rss_common.lo
 am__objects_8 = raptor_rss.lo
-#am__objects_9 = raptor_grddl.lo
+am__objects_9 = raptor_grddl.lo
 am__objects_10 = raptor_guess.lo
 am__objects_11 = raptor_librdfa.lo
 #am__objects_12 = raptor_json.lo
@@ -244,7 +244,7 @@ am__objects_22 =  \
 am__objects_23 =  \
 	raptor_serialize_json.lo
 #am__objects_24 = strcasecmp.lo
-am__objects_25 = parsedate.lo
+#am__objects_25 = parsedate.lo
 am_libraptor2_la_OBJECTS = raptor_parse.lo raptor_serialize.lo \
 	raptor_rfc2396.lo raptor_uri.lo raptor_log.lo \
 	raptor_locator.lo raptor_namespace.lo raptor_qname.lo \
@@ -526,7 +526,7 @@ AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
 AUTOCONF = autoconf
-AUTOHEADER = ${SHELL} /home/ciaran/Software/redland/raptor2-2.0.15/build/missing autoheader
+AUTOHEADER = ${SHELL} /mnt/d/redland/raptor2-2.0.15/build/missing autoheader
 AUTOMAKE = automake
 AWK = gawk
 BISON = bison
@@ -534,8 +534,8 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS =  -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-prototypes -Wswitch-enum -Wundef -Wunreachable-code -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-missing-field-initializers -Wno-sign-conversion -Wno-system-headers -Wno-unused-parameter -Wswitch-bool -Wlogical-not-parentheses -Wsizeof-array-argument -Wbool-compare -Wc90-c99-compat -Wc99-c11-compat -DRAPTOR_INTERNAL=1 -I/usr/include/libxml2 
-CURL_CONFIG = 
+CPPFLAGS =  -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-prototypes -Wswitch-enum -Wundef -Wunreachable-code -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-missing-field-initializers -Wno-sign-conversion -Wno-system-headers -Wno-unused-parameter -Wswitch-bool -Wlogical-not-parentheses -Wsizeof-array-argument -Wbool-compare -Wc90-c99-compat -Wc99-c11-compat -DRAPTOR_INTERNAL=1 -I/usr/include/libxml2 -I/usr/local/include/libxml2  
+CURL_CONFIG = curl-config
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -568,18 +568,18 @@ LEX = flex
 LEXLIB = -lfl
 LEX_OUTPUT_ROOT = lex.yy
 LIBCURL_CFLAGS = 
-LIBCURL_LIBS = 
-LIBOBJS =  ${LIBOBJDIR}raptor_www_libxml$U.o
+LIBCURL_LIBS = -lcurl
+LIBOBJS =  ${LIBOBJDIR}raptor_www_curl$U.o
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
-LIBXML_CFLAGS = -I/usr/include/libxml2
-LIBXML_LIBS = -lxml2
+LIBXML_CFLAGS = -I/usr/local/include/libxml2
+LIBXML_LIBS = -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl
 LIPO = 
 LN_S = ln -s
-LTLIBOBJS =  ${LIBOBJDIR}raptor_www_libxml$U.lo
+LTLIBOBJS =  ${LIBOBJDIR}raptor_www_curl$U.lo
 LT_SYS_LIBRARY_PATH = 
 MAINT = 
-MAKEINFO = ${SHELL} /home/ciaran/Software/redland/raptor2-2.0.15/build/missing makeinfo
+MAKEINFO = ${SHELL} /mnt/d/redland/raptor2-2.0.15/build/missing makeinfo
 MANIFEST_TOOL = :
 
 # Memory debugging
@@ -606,17 +606,17 @@ PKG_CONFIG_LIBDIR =
 PKG_CONFIG_PATH = 
 PKG_CONFIG_REQUIRES = 
 RANLIB = ranlib
-RAPTOR_LDFLAGS =  -lxml2
+RAPTOR_LDFLAGS =  -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2
 RAPTOR_LIBTOOLLIBS = libraptor2.la
 RAPTOR_LIBTOOL_VERSION = 0:0:0
-RAPTOR_PARSERS =  rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads
+RAPTOR_PARSERS =  rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl
 RAPTOR_SERIALIZERS =  rdfxml rdfxml-abbrev turtle ntriples rss-1.0 dot html json atom nquads
 RAPTOR_VERSION = 
 RAPTOR_VERSION_DECIMAL = 20015
 RAPTOR_VERSION_MAJOR = 2
 RAPTOR_VERSION_MINOR = 0
 RAPTOR_VERSION_RELEASE = 15
-RAPTOR_WWW_LIBRARY = libxml
+RAPTOR_WWW_LIBRARY = libcurl
 RAPTOR_XML_PARSER = libxml
 RECHO = echo
 RECHO_C = 
@@ -629,11 +629,11 @@ STRIP = strip
 TAR = tar
 VERSION = 2.0.15
 XML_CONFIG = xml2-config
-XSLT_CONFIG = 
-abs_builddir = /home/ciaran/Software/redland/raptor2-2.0.15/src
-abs_srcdir = /home/ciaran/Software/redland/raptor2-2.0.15/src
-abs_top_builddir = /home/ciaran/Software/redland/raptor2-2.0.15
-abs_top_srcdir = /home/ciaran/Software/redland/raptor2-2.0.15
+XSLT_CONFIG = xslt-config
+abs_builddir = /mnt/d/redland/raptor2-2.0.15/src
+abs_srcdir = /mnt/d/redland/raptor2-2.0.15/src
+abs_top_builddir = /mnt/d/redland/raptor2-2.0.15
+abs_top_srcdir = /mnt/d/redland/raptor2-2.0.15
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -662,7 +662,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/ciaran/Software/redland/raptor2-2.0.15/build/install-sh
+install_sh = ${SHELL} /mnt/d/redland/raptor2-2.0.15/build/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -671,7 +671,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/ciaran/Software/redland/raptor2-2.0.15/install
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
@@ -732,9 +732,9 @@ libraptor2_la_SOURCES = raptor_parse.c raptor_serialize.c \
 	$(am__append_18) $(am__append_19) $(am__append_20) \
 	$(am__append_21) $(am__append_22) $(am__append_23) \
 	$(am__append_24) $(am__append_25) $(am__append_26)
-libraptor2_la_LIBADD = $(am__append_29)  ${LIBOBJDIR}raptor_www_libxml$U.lo
+libraptor2_la_LIBADD = $(am__append_29)  ${LIBOBJDIR}raptor_www_curl$U.lo
 libraptor2_la_LDFLAGS = -version-info 0:0:0 \
- -lxml2 $(MEM_LIBS)
+ -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2 $(MEM_LIBS)
 
 EXTRA_DIST = \
 CMakeLists.txt \

@@ -75,8 +75,8 @@ done
 config="pkg-config raptor2"
 
 if test "$echo_cflags" = "yes"; then
-  echo -I/home/ciaran/Software/redland/rasqal-0.9.33/src  `$config --cflags`
+  echo -I/mnt/d/redland/rasqal-0.9.33/src  `$config --cflags`
 fi
 if test "$echo_libs" = "yes"; then
-  echo -L/home/ciaran/Software/redland/rasqal-0.9.33/src/.libs -lrasqal  `$config --libs`
+  echo -L/mnt/d/redland/rasqal-0.9.33/src/.libs -lrasqal  `$config --libs`
 fi

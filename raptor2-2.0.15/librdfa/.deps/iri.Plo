@@ -63,13 +63,18 @@ iri.lo: iri.c /usr/include/stdc-predef.h config.h ../src/raptor_config.h \
  /usr/include/libxml2/libxml/list.h \
  /usr/include/libxml2/libxml/xmlautomata.h \
  /usr/include/libxml2/libxml/entities.h \
- /usr/include/libxml2/libxml/encoding.h /usr/include/iconv.h \
+ /usr/include/libxml2/libxml/encoding.h /usr/local/include/iconv.h \
+ /usr/include/errno.h /usr/include/x86_64-linux-gnu/bits/errno.h \
+ /usr/include/linux/errno.h /usr/include/x86_64-linux-gnu/asm/errno.h \
+ /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
+ /usr/include/wchar.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
  /usr/include/unicode/ucnv.h /usr/include/unicode/ucnv_err.h \
  /usr/include/unicode/utypes.h /usr/include/unicode/umachine.h \
  /usr/include/unicode/ptypes.h /usr/include/unicode/platform.h \
  /usr/include/unicode/uconfig.h /usr/include/unicode/uvernum.h \
  /usr/lib/gcc/x86_64-linux-gnu/7/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/unicode/urename.h /usr/include/unicode/uversion.h \
  /usr/lib/gcc/x86_64-linux-gnu/7/include/float.h \
@@ -81,11 +86,28 @@ iri.lo: iri.c /usr/include/stdc-predef.h config.h ../src/raptor_config.h \
  /usr/include/libxml2/libxml/xlink.h \
  /usr/include/libxml2/libxml/xmlmemory.h \
  /usr/include/libxml2/libxml/threads.h ../src/raptor2.h \
- ../src/raptor_internal.h /usr/include/libxml2/libxml/nanohttp.h \
- /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/time.h \
- /usr/include/x86_64-linux-gnu/bits/time.h \
+ ../src/raptor_internal.h /usr/include/x86_64-linux-gnu/curl/curl.h \
+ /usr/include/x86_64-linux-gnu/curl/curlver.h \
+ /usr/include/x86_64-linux-gnu/curl/system.h \
+ /usr/include/x86_64-linux-gnu/sys/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
+ /usr/include/x86_64-linux-gnu/bits/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/socket_type.h \
+ /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
+ /usr/include/x86_64-linux-gnu/asm/socket.h \
+ /usr/include/asm-generic/socket.h \
+ /usr/include/x86_64-linux-gnu/asm/sockios.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
+ /usr/include/time.h /usr/include/x86_64-linux-gnu/bits/time.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h
+ /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h \
+ /usr/include/x86_64-linux-gnu/curl/easy.h \
+ /usr/include/x86_64-linux-gnu/curl/multi.h \
+ /usr/include/x86_64-linux-gnu/curl/curl.h \
+ /usr/include/x86_64-linux-gnu/curl/typecheck-gcc.h \
+ /usr/include/x86_64-linux-gnu/curl/easy.h
 
 /usr/include/stdc-predef.h:
 
@@ -243,7 +265,27 @@ rdfa.h:
 
 /usr/include/libxml2/libxml/encoding.h:
 
-/usr/include/iconv.h:
+/usr/local/include/iconv.h:
+
+/usr/include/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/x86_64-linux-gnu/asm/errno.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/wchar.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/unicode/ucnv.h:
 
@@ -264,8 +306,6 @@ rdfa.h:
 /usr/lib/gcc/x86_64-linux-gnu/7/include/stdint.h:
 
 /usr/include/stdint.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
@@ -303,9 +343,31 @@ rdfa.h:
 
 ../src/raptor_internal.h:
 
-/usr/include/libxml2/libxml/nanohttp.h:
+/usr/include/x86_64-linux-gnu/curl/curl.h:
 
-/usr/include/x86_64-linux-gnu/sys/time.h:
+/usr/include/x86_64-linux-gnu/curl/curlver.h:
+
+/usr/include/x86_64-linux-gnu/curl/system.h:
+
+/usr/include/x86_64-linux-gnu/sys/socket.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h:
+
+/usr/include/x86_64-linux-gnu/bits/socket.h:
+
+/usr/include/x86_64-linux-gnu/bits/socket_type.h:
+
+/usr/include/x86_64-linux-gnu/bits/sockaddr.h:
+
+/usr/include/x86_64-linux-gnu/asm/socket.h:
+
+/usr/include/asm-generic/socket.h:
+
+/usr/include/x86_64-linux-gnu/asm/sockios.h:
+
+/usr/include/asm-generic/sockios.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
 /usr/include/time.h:
 
@@ -314,3 +376,15 @@ rdfa.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+
+/usr/include/x86_64-linux-gnu/sys/time.h:
+
+/usr/include/x86_64-linux-gnu/curl/easy.h:
+
+/usr/include/x86_64-linux-gnu/curl/multi.h:
+
+/usr/include/x86_64-linux-gnu/curl/curl.h:
+
+/usr/include/x86_64-linux-gnu/curl/typecheck-gcc.h:
+
+/usr/include/x86_64-linux-gnu/curl/easy.h:

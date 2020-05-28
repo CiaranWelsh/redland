@@ -1,4 +1,4 @@
-prefix=/home/ciaran/Software/redland/rasqal-0.9.33/install
+prefix=/mnt/d/redland/rasqal-0.9.33/install.linux
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include/rasqal

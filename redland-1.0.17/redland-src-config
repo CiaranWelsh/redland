@@ -71,7 +71,7 @@ while test $# -gt 0; do
       usage 0
       ;;
     --run)
-      lpath=/home/ciaran/Software/redland/redland-1.0.17/src/.libs
+      lpath=/mnt/d/redland/redland-1.0.17/src/.libs
       if test -d .libs; then
         lpath=".libs:$lpath"
       fi
@@ -120,16 +120,16 @@ raptor_config="pkg-config raptor2"
 rasqal_config="pkg-config rasqal"
 
 if test "$echo_cflags" = "yes"; then
-  echo -I/home/ciaran/Software/redland/redland-1.0.17/src `$rasqal_config --cflags` `$raptor_config --cflags`
+  echo -I/mnt/d/redland/redland-1.0.17/src `$rasqal_config --cflags` `$raptor_config --cflags`
 fi
 if test "$echo_libtool_libs" = "yes"; then
-  echo /home/ciaran/Software/redland/redland-1.0.17/src/librdf.la
+  echo /mnt/d/redland/redland-1.0.17/src/librdf.la
 fi
 
 if test "$echo_libs" = "yes"; then
-  echo -L/home/ciaran/Software/redland/redland-1.0.17/src/.libs -lrdf   -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2   `$rasqal_config --libs` `$raptor_config --libs`
+  echo -L/mnt/d/redland/redland-1.0.17/src/.libs -lrdf   -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2   `$rasqal_config --libs` `$raptor_config --libs`
 fi
 
 if test "$echo_swig" = "yes"; then  
-  echo /home/ciaran/Software/redland/redland-1.0.17/Redland.i
+  echo /mnt/d/redland/redland-1.0.17/Redland.i
 fi

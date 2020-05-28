@@ -44,56 +44,52 @@
 #define RAPTOR_IOSTREAM_FLAGS_EOF           1
 #define RAPTOR_IOSTREAM_FLAGS_FREE_HANDLER  2
 
-struct raptor_iostream_s
-{
-  raptor_world *world;
-  
-  void *user_data;
-  const raptor_iostream_handler* handler;
-  size_t offset;
-  unsigned int mode;
-  int flags;
-};
+struct raptor_iostream_s {
+    raptor_world *world;
 
+    void *user_data;
+    const raptor_iostream_handler *handler;
+    size_t offset;
+    unsigned int mode;
+    int flags;
+};
 
 
 /* prototypes for local functions */
 
 
 static int
-raptor_iostream_calculate_modes(const raptor_iostream_handler * const handler)
-{
-  int mode = 0;
+raptor_iostream_calculate_modes(const raptor_iostream_handler *const handler) {
+    int mode = 0;
 
-  /* API V1 checks */
-  if((handler->version >= 1) && 
-     handler->read_bytes)
-    mode |= RAPTOR_IOSTREAM_MODE_READ;
+    /* API V1 checks */
+    if ((handler->version >= 1) &&
+        handler->read_bytes)
+        mode |= RAPTOR_IOSTREAM_MODE_READ;
 
-  /* API V2 checks */
-  if((handler->version >= 2) &&
-     (handler->write_byte || handler->write_bytes))
-    mode |= RAPTOR_IOSTREAM_MODE_WRITE;
+    /* API V2 checks */
+    if ((handler->version >= 2) &&
+        (handler->write_byte || handler->write_bytes))
+        mode |= RAPTOR_IOSTREAM_MODE_WRITE;
 
-  return mode;
+    return mode;
 }
 
 
 /* Return non-0 if handler is legal and OK for given mode (if not 0 = ANY) */
 static int
-raptor_iostream_check_handler(const raptor_iostream_handler * const handler,
-                              unsigned int user_mode)
-{
-  int mode;
+raptor_iostream_check_handler(const raptor_iostream_handler *const handler,
+                              unsigned int user_mode) {
+    int mode;
 
-  if(handler->version < 1 || handler->version > 2)
-    return 0;
+    if (handler->version < 1 || handler->version > 2)
+        return 0;
 
-  mode = raptor_iostream_calculate_modes(handler);
-  if(user_mode && !(user_mode & mode))
-    return 0;
-  
-  return (mode != 0);
+    mode = raptor_iostream_calculate_modes(handler);
+    if (user_mode && !(user_mode & mode))
+        return 0;
+
+    return (mode != 0);
 }
 
 
@@ -107,77 +103,72 @@ raptor_iostream_check_handler(const raptor_iostream_handler * const handler,
  *
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
+raptor_iostream *
 raptor_new_iostream_from_handler(raptor_world *world,
                                  void *user_data,
-                                 const raptor_iostream_handler* const handler)
-{
-  raptor_iostream* iostr;
+                                 const raptor_iostream_handler *const handler) {
+    raptor_iostream *iostr;
 
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
-  RAPTOR_ASSERT_OBJECT_POINTER_RETURN_VALUE(handler, raptor_iostream_handler, NULL);
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+    RAPTOR_ASSERT_OBJECT_POINTER_RETURN_VALUE(handler, raptor_iostream_handler, NULL);
 
-  raptor_world_open(world);
-  
-  if(!raptor_iostream_check_handler(handler, 0))
-    return NULL;
+    raptor_world_open(world);
 
-  iostr = RAPTOR_CALLOC(raptor_iostream*, 1, sizeof(*iostr));
-  if(!iostr)
-    return NULL;
+    if (!raptor_iostream_check_handler(handler, 0))
+        return NULL;
 
-  iostr->world = world;
-  iostr->handler = handler;
-  iostr->user_data = (void*)user_data;
-  iostr->mode = raptor_iostream_calculate_modes(handler);
-  
-  if(iostr->handler->init && 
-     iostr->handler->init(iostr->user_data)) {
-    RAPTOR_FREE(raptor_iostream, iostr);
-    return NULL;
-  }
-  return iostr;
+    iostr = RAPTOR_CALLOC(raptor_iostream * , 1, sizeof(*iostr));
+    if (!iostr)
+        return NULL;
+
+    iostr->world = world;
+    iostr->handler = handler;
+    iostr->user_data = (void *) user_data;
+    iostr->mode = raptor_iostream_calculate_modes(handler);
+
+    if (iostr->handler->init &&
+        iostr->handler->init(iostr->user_data)) {
+        RAPTOR_FREE(raptor_iostream, iostr);
+        return NULL;
+    }
+    return iostr;
 }
-
 
 
 /* Local handlers for reading/writing to/from a sink */
 
 static int
-raptor_sink_iostream_write_byte(void *user_data, const int byte)
-{
-  return 0;
+raptor_sink_iostream_write_byte(void *user_data, const int byte) {
+    return 0;
 }
 
 static int
 raptor_sink_iostream_write_bytes(void *user_data, const void *ptr,
-                                 size_t size, size_t nmemb)
-{
-  return RAPTOR_BAD_CAST(int, size * nmemb); /* success */
+                                 size_t size, size_t nmemb) {
+    return RAPTOR_BAD_CAST(
+    int, size * nmemb); /* success */
 }
 
 static int
 raptor_sink_iostream_read_bytes(void *user_data, void *ptr,
-                                size_t size, size_t nmemb)
-{
-  return 0;
+                                size_t size, size_t nmemb) {
+    return 0;
 }
 
 static int
-raptor_sink_iostream_read_eof(void *user_data)
-{
-  return 1; /* EOF always */
+raptor_sink_iostream_read_eof(void *user_data) {
+    return 1; /* EOF always */
 }
 
 static const raptor_iostream_handler raptor_iostream_sink_handler = {
-  /* .version     = */ 2,
-  /* .init        = */ NULL,
-  /* .finish      = */ NULL,
-  /* .write_byte  = */ raptor_sink_iostream_write_byte,
-  /* .write_bytes = */ raptor_sink_iostream_write_bytes,
-  /* .write_end   = */ NULL,
-  /* .read_bytes  = */ raptor_sink_iostream_read_bytes,
-  /* .read_eof    = */ raptor_sink_iostream_read_eof
+        /* .version     = */ 2,
+        /* .init        = */ NULL,
+        /* .finish      = */ NULL,
+        /* .write_byte  = */ raptor_sink_iostream_write_byte,
+        /* .write_bytes = */ raptor_sink_iostream_write_bytes,
+        /* .write_end   = */ NULL,
+        /* .read_bytes  = */ raptor_sink_iostream_read_bytes,
+        /* .read_eof    = */ raptor_sink_iostream_read_eof
 };
 
 
@@ -192,73 +183,68 @@ static const raptor_iostream_handler raptor_iostream_sink_handler = {
  * 
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
-raptor_new_iostream_to_sink(raptor_world *world)
-{
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+raptor_iostream *
+raptor_new_iostream_to_sink(raptor_world *world) {
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  raptor_world_open(world);
-  
-  return raptor_new_iostream_from_handler(world,
-                                          NULL, &raptor_iostream_sink_handler);
+    raptor_world_open(world);
+
+    return raptor_new_iostream_from_handler(world,
+                                            NULL, &raptor_iostream_sink_handler);
 }
 
 
 /* Local handlers for reading/writing from a filename */
 
 static void
-raptor_filename_iostream_finish(void *user_data)
-{
-  FILE* handle = (FILE*)user_data;
-  fclose(handle);
+raptor_filename_iostream_finish(void *user_data) {
+    FILE *handle = (FILE *) user_data;
+    fclose(handle);
 }
 
 static int
-raptor_filename_iostream_write_byte(void *user_data, const int byte)
-{
-  FILE* handle = (FILE*)user_data;
-  return (fputc(byte, handle) == byte);
+raptor_filename_iostream_write_byte(void *user_data, const int byte) {
+    FILE *handle = (FILE *) user_data;
+    return (fputc(byte, handle) == byte);
 }
 
 static int
 raptor_filename_iostream_write_bytes(void *user_data,
-                                     const void *ptr, size_t size, size_t nmemb)
-{
-  FILE* handle = (FILE*)user_data;
-  return RAPTOR_BAD_CAST(int, fwrite(ptr, size, nmemb, handle));
+                                     const void *ptr, size_t size, size_t nmemb) {
+    FILE *handle = (FILE *) user_data;
+    return RAPTOR_BAD_CAST(
+    int, fwrite(ptr, size, nmemb, handle));
 }
 
 static int
-raptor_filename_iostream_write_end(void *user_data)
-{
-  FILE* handle = (FILE*)user_data;
-  return fclose(handle);
+raptor_filename_iostream_write_end(void *user_data) {
+    FILE *handle = (FILE *) user_data;
+    return fclose(handle);
 }
 
 static int
 raptor_filename_iostream_read_bytes(void *user_data,
-                                    void *ptr, size_t size, size_t nmemb)
-{
-  FILE* handle = (FILE*)user_data;
-  return RAPTOR_BAD_CAST(int, fread(ptr, size, nmemb, handle));
+                                    void *ptr, size_t size, size_t nmemb) {
+    FILE *handle = (FILE *) user_data;
+    return RAPTOR_BAD_CAST(
+    int, fread(ptr, size, nmemb, handle));
 }
 
 static int
-raptor_filename_iostream_read_eof(void *user_data)
-{
-  FILE* handle = (FILE*)user_data;
-  return feof(handle);
+raptor_filename_iostream_read_eof(void *user_data) {
+    FILE *handle = (FILE *) user_data;
+    return feof(handle);
 }
 
 static const raptor_iostream_handler raptor_iostream_write_filename_handler = {
-  /* .version     = */ 2,
-  /* .init        = */ NULL,
-  /* .finish      = */ raptor_filename_iostream_finish,
-  /* .write_byte  = */ raptor_filename_iostream_write_byte,
-  /* .write_bytes = */ raptor_filename_iostream_write_bytes,
-  /* .write_end   = */ raptor_filename_iostream_write_end,
-  /* .read_bytes  = */ NULL,
-  /* .read_eof    = */ NULL
+        /* .version     = */ 2,
+        /* .init        = */ NULL,
+        /* .finish      = */ raptor_filename_iostream_finish,
+        /* .write_byte  = */ raptor_filename_iostream_write_byte,
+        /* .write_bytes = */ raptor_filename_iostream_write_bytes,
+        /* .write_end   = */ raptor_filename_iostream_write_end,
+        /* .read_bytes  = */ NULL,
+        /* .read_eof    = */ NULL
 };
 
 
@@ -271,58 +257,57 @@ static const raptor_iostream_handler raptor_iostream_write_filename_handler = {
  * 
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
-raptor_new_iostream_to_filename(raptor_world *world, const char *filename)
-{
-  FILE *handle;
-  raptor_iostream* iostr;
-  const raptor_iostream_handler* handler;
-  const unsigned int mode = RAPTOR_IOSTREAM_MODE_WRITE;
+raptor_iostream *
+raptor_new_iostream_to_filename(raptor_world *world, const char *filename) {
+    FILE *handle;
+    raptor_iostream *iostr;
+    const raptor_iostream_handler *handler;
+    const unsigned int mode = RAPTOR_IOSTREAM_MODE_WRITE;
 
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  raptor_world_open(world);
-  
-  if(!filename)
-    return NULL;
-  
-  handler = &raptor_iostream_write_filename_handler;
-  if(!raptor_iostream_check_handler(handler, mode))
-    return NULL;
+    raptor_world_open(world);
 
-  handle = fopen(filename, "wb");
-  if(!handle)
-    return NULL;
-  
-  iostr = RAPTOR_CALLOC(raptor_iostream*, 1, sizeof(*iostr));
-  if(!iostr) {
-    fclose(handle);
-    return NULL;
-  }
+    if (!filename)
+        return NULL;
 
-  iostr->world = world;
-  iostr->handler = handler;
-  iostr->user_data = (void*)handle;
-  iostr->mode = mode;
+    handler = &raptor_iostream_write_filename_handler;
+    if (!raptor_iostream_check_handler(handler, mode))
+        return NULL;
 
-  if(iostr->handler->init && 
-     iostr->handler->init(iostr->user_data)) {
-    raptor_free_iostream(iostr);
-    return NULL;
-  }
-  return iostr;
+    handle = fopen(filename, "wb");
+    if (!handle)
+        return NULL;
+
+    iostr = RAPTOR_CALLOC(raptor_iostream * , 1, sizeof(*iostr));
+    if (!iostr) {
+        fclose(handle);
+        return NULL;
+    }
+
+    iostr->world = world;
+    iostr->handler = handler;
+    iostr->user_data = (void *) handle;
+    iostr->mode = mode;
+
+    if (iostr->handler->init &&
+        iostr->handler->init(iostr->user_data)) {
+        raptor_free_iostream(iostr);
+        return NULL;
+    }
+    return iostr;
 }
 
 
 static const raptor_iostream_handler raptor_iostream_write_file_handler = {
-  /* .version     = */ 2,
-  /* .init        = */ NULL,
-  /* .finish      = */ NULL,
-  /* .write_byte  = */ raptor_filename_iostream_write_byte,
-  /* .write_bytes = */ raptor_filename_iostream_write_bytes,
-  /* .write_end   = */ NULL,
-  /* .read_bytes  = */ NULL,
-  /* .read_eof    = */ NULL
+        /* .version     = */ 2,
+        /* .init        = */ NULL,
+        /* .finish      = */ NULL,
+        /* .write_byte  = */ raptor_filename_iostream_write_byte,
+        /* .write_bytes = */ raptor_filename_iostream_write_bytes,
+        /* .write_end   = */ NULL,
+        /* .read_bytes  = */ NULL,
+        /* .read_eof    = */ NULL
 };
 
 
@@ -338,116 +323,114 @@ static const raptor_iostream_handler raptor_iostream_write_file_handler = {
  *
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
-raptor_new_iostream_to_file_handle(raptor_world *world, FILE *handle)
-{
-  raptor_iostream* iostr;
-  const raptor_iostream_handler* handler;
-  const unsigned int mode = RAPTOR_IOSTREAM_MODE_WRITE;
+raptor_iostream *
+raptor_new_iostream_to_file_handle(raptor_world *world, FILE *handle) {
+    raptor_iostream *iostr;
+    const raptor_iostream_handler *handler;
+    const unsigned int mode = RAPTOR_IOSTREAM_MODE_WRITE;
 
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  raptor_world_open(world);
-  
-  if(!handle)
-    return NULL;
+    raptor_world_open(world);
 
-  handler = &raptor_iostream_write_file_handler;
-  if(!raptor_iostream_check_handler(handler, mode))
-    return NULL;
+    if (!handle)
+        return NULL;
 
-  iostr = RAPTOR_CALLOC(raptor_iostream*, 1, sizeof(*iostr));
-  if(!iostr)
-    return NULL;
+    handler = &raptor_iostream_write_file_handler;
+    if (!raptor_iostream_check_handler(handler, mode))
+        return NULL;
 
-  iostr->world = world;
-  iostr->handler = handler;
-  iostr->user_data = (void*)handle;
-  iostr->mode = mode;
+    iostr = RAPTOR_CALLOC(raptor_iostream * , 1, sizeof(*iostr));
+    if (!iostr)
+        return NULL;
 
-  if(iostr->handler->init && iostr->handler->init(iostr->user_data)) {
-    RAPTOR_FREE(raptor_iostream, iostr);
-    return NULL;
-  }
-  return iostr;
+    iostr->world = world;
+    iostr->handler = handler;
+    iostr->user_data = (void *) handle;
+    iostr->mode = mode;
+
+    if (iostr->handler->init && iostr->handler->init(iostr->user_data)) {
+        RAPTOR_FREE(raptor_iostream, iostr);
+        return NULL;
+    }
+    return iostr;
 }
 
 
-
 struct raptor_write_string_iostream_context {
-  raptor_stringbuffer *sb;
-  void *(*malloc_handler)(size_t size);
-  void **string_p;
-  size_t *length_p;
+    raptor_stringbuffer *sb;
+
+    void *(*malloc_handler)(size_t size);
+
+    void **string_p;
+    size_t *length_p;
 };
 
 
 /* Local handlers for writing to a string */
 
 static void
-raptor_write_string_iostream_finish(void *user_data) 
-{
-  struct raptor_write_string_iostream_context* con;
-  size_t len;
-  void *str = NULL;
+raptor_write_string_iostream_finish(void *user_data) {
+    struct raptor_write_string_iostream_context *con;
+    size_t len;
+    void *str = NULL;
 
-  con = (struct raptor_write_string_iostream_context*)user_data;
-  len = raptor_stringbuffer_length(con->sb);
+    con = (struct raptor_write_string_iostream_context *) user_data;
+    len = raptor_stringbuffer_length(con->sb);
 
-  *con->string_p = NULL;
-  if(con->length_p)
-    *con->length_p = len;
-  
-  str = (void*)con->malloc_handler(len+1);
-  if(str) {
-    if(len)
-      raptor_stringbuffer_copy_to_string(con->sb, (unsigned char*)str, len+1);
-    else
-      *(char*)str='\0';
-    *con->string_p = str;
-  }
+    *con->string_p = NULL;
+    if (con->length_p)
+        *con->length_p = len;
 
-  if(!str && con->length_p)
-    *con->length_p = 0;
-  
-  raptor_free_stringbuffer(con->sb);
-  RAPTOR_FREE(raptor_write_string_iostream_context, con);
-  return;
+    str = (void *) con->malloc_handler(len + 1);
+    if (str) {
+        if (len)
+            raptor_stringbuffer_copy_to_string(con->sb, (unsigned char *) str, len + 1);
+        else
+            *(char *) str = '\0';
+        *con->string_p = str;
+    }
+
+    if (!str && con->length_p)
+        *con->length_p = 0;
+
+    raptor_free_stringbuffer(con->sb);
+    RAPTOR_FREE(raptor_write_string_iostream_context, con);
+    return;
 }
 
 static int
-raptor_write_string_iostream_write_byte(void *user_data, const int byte)
-{
-  struct raptor_write_string_iostream_context* con;
-  unsigned char buf = (unsigned char)byte;
+raptor_write_string_iostream_write_byte(void *user_data, const int byte) {
+    struct raptor_write_string_iostream_context *con;
+    unsigned char buf = (unsigned char) byte;
 
-  con = (struct raptor_write_string_iostream_context*)user_data;
-  return raptor_stringbuffer_append_counted_string(con->sb, &buf, 1, 1);
+    con = (struct raptor_write_string_iostream_context *) user_data;
+    return raptor_stringbuffer_append_counted_string(con->sb, &buf, 1, 1);
 }
 
 
 static int
-raptor_write_string_iostream_write_bytes(void *user_data, const void *ptr, 
-                                         size_t size, size_t nmemb)
-{
-  struct raptor_write_string_iostream_context* con;
+raptor_write_string_iostream_write_bytes(void *user_data, const void *ptr,
+                                         size_t size, size_t nmemb) {
+    struct raptor_write_string_iostream_context *con;
 
-  con = (struct raptor_write_string_iostream_context*)user_data;
-  if(raptor_stringbuffer_append_counted_string(con->sb,
-                                               (const unsigned char*)ptr, size * nmemb, 1))
-    return 0; /* failure */
-  return RAPTOR_BAD_CAST(int, size * nmemb); /* success */
+    con = (struct raptor_write_string_iostream_context *) user_data;
+    if (raptor_stringbuffer_append_counted_string(con->sb,
+                                                  (const unsigned char *) ptr, size * nmemb, 1))
+        return 0; /* failure */
+    return RAPTOR_BAD_CAST(
+    int, size * nmemb); /* success */
 }
 
 static const raptor_iostream_handler raptor_iostream_write_string_handler = {
-  /* .version     = */ 2,
-  /* .init        = */ NULL,
-  /* .finish      = */ raptor_write_string_iostream_finish,
-  /* .write_byte  = */ raptor_write_string_iostream_write_byte,
-  /* .write_bytes = */ raptor_write_string_iostream_write_bytes,
-  /* .write_end   = */ NULL,
-  /* .read_bytes  = */ NULL,
-  /* .read_eof    = */ NULL
+        /* .version     = */ 2,
+        /* .init        = */ NULL,
+        /* .finish      = */ raptor_write_string_iostream_finish,
+        /* .write_byte  = */ raptor_write_string_iostream_write_byte,
+        /* .write_bytes = */ raptor_write_string_iostream_write_bytes,
+        /* .write_end   = */ NULL,
+        /* .read_bytes  = */ NULL,
+        /* .read_eof    = */ NULL
 };
 
 
@@ -467,67 +450,67 @@ static const raptor_iostream_handler raptor_iostream_write_string_handler = {
  * Return value: new #raptor_iostream object or NULL on failure
  **/
 RAPTOR_EXTERN_C
-raptor_iostream*
+raptor_iostream *
 raptor_new_iostream_to_string(raptor_world *world,
                               void **string_p, size_t *length_p,
-                              raptor_data_malloc_handler const malloc_handler)
-{
-  raptor_iostream* iostr;
-  struct raptor_write_string_iostream_context* con;
-  const raptor_iostream_handler* handler;
-  const unsigned int mode = RAPTOR_IOSTREAM_MODE_WRITE;
+                              raptor_data_malloc_handler const malloc_handler) {
+    raptor_iostream *iostr;
+    struct raptor_write_string_iostream_context *con;
+    const raptor_iostream_handler *handler;
+    const unsigned int mode = RAPTOR_IOSTREAM_MODE_WRITE;
 
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  if(!string_p)
-    return NULL;
-  
-  raptor_world_open(world);
-  
-  handler = &raptor_iostream_write_string_handler;
-  if(!raptor_iostream_check_handler(handler, mode))
-    return NULL;
+    if (!string_p)
+        return NULL;
 
-  iostr = RAPTOR_CALLOC(raptor_iostream*, 1, sizeof(*iostr));
-  if(!iostr)
-    return NULL;
+    raptor_world_open(world);
 
-  con = RAPTOR_CALLOC(struct raptor_write_string_iostream_context*, 1,
-                      sizeof(*con));
-  if(!con) {
-    RAPTOR_FREE(raptor_iostream, iostr);
-    return NULL;
-  }
+    handler = &raptor_iostream_write_string_handler;
+    if (!raptor_iostream_check_handler(handler, mode))
+        return NULL;
 
-  con->sb = raptor_new_stringbuffer();
-  if(!con->sb) {
-    RAPTOR_FREE(raptor_iostream, iostr);
-    RAPTOR_FREE(raptor_write_string_iostream_context, con);
-    return NULL;
-  }
+    iostr = RAPTOR_CALLOC(raptor_iostream * , 1, sizeof(*iostr));
+    if (!iostr)
+        return NULL;
 
-  con->string_p = string_p;
-  *string_p = NULL;
+    con = RAPTOR_CALLOC(
+    struct raptor_write_string_iostream_context*, 1,
+            sizeof(*con));
+    if (!con) {
+        RAPTOR_FREE(raptor_iostream, iostr);
+        return NULL;
+    }
 
-  con->length_p = length_p;  
-  if(length_p)
-    *length_p = 0;
+    con->sb = raptor_new_stringbuffer();
+    if (!con->sb) {
+        RAPTOR_FREE(raptor_iostream, iostr);
+        RAPTOR_FREE(raptor_write_string_iostream_context, con);
+        return NULL;
+    }
 
-  if(malloc_handler)
-    con->malloc_handler = malloc_handler;
-  else
-    con->malloc_handler = raptor_alloc_memory;
+    con->string_p = string_p;
+    *string_p = NULL;
 
-  iostr->world = world;
-  iostr->handler = handler;
-  iostr->user_data = (void*)con;
-  iostr->mode = mode;
+    con->length_p = length_p;
+    if (length_p)
+        *length_p = 0;
 
-  if(iostr->handler->init && iostr->handler->init(iostr->user_data)) {
-    raptor_free_iostream(iostr);
-    return NULL;
-  }
-  return iostr;
+    if (malloc_handler)
+        con->malloc_handler = malloc_handler;
+    else
+        con->malloc_handler = raptor_alloc_memory;
+
+    iostr->world = world;
+    iostr->handler = handler;
+    iostr->user_data = (void *) con;
+    iostr->mode = mode;
+
+    if (iostr->handler->init && iostr->handler->init(iostr->user_data)) {
+        raptor_free_iostream(iostr);
+        return NULL;
+    }
+    return iostr;
 }
 
 
@@ -543,27 +526,26 @@ raptor_new_iostream_to_string(raptor_world *world,
  * 
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
-raptor_new_iostream_from_sink(raptor_world *world)
-{
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+raptor_iostream *
+raptor_new_iostream_from_sink(raptor_world *world) {
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  raptor_world_open(world);
-  
-  return raptor_new_iostream_from_handler(world, NULL,
-                                          &raptor_iostream_sink_handler);
+    raptor_world_open(world);
+
+    return raptor_new_iostream_from_handler(world, NULL,
+                                            &raptor_iostream_sink_handler);
 }
 
 
 static const raptor_iostream_handler raptor_iostream_read_filename_handler = {
-  /* .version     = */ 2,
-  /* .init        = */ NULL,
-  /* .finish      = */ raptor_filename_iostream_finish,
-  /* .write_byte  = */ NULL,
-  /* .write_bytes = */ NULL,
-  /* .write_end   = */ NULL,
-  /* .read_bytes  = */ raptor_filename_iostream_read_bytes,
-  /* .read_eof    = */ raptor_filename_iostream_read_eof
+        /* .version     = */ 2,
+        /* .init        = */ NULL,
+        /* .finish      = */ raptor_filename_iostream_finish,
+        /* .write_byte  = */ NULL,
+        /* .write_bytes = */ NULL,
+        /* .write_end   = */ NULL,
+        /* .read_bytes  = */ raptor_filename_iostream_read_bytes,
+        /* .read_eof    = */ raptor_filename_iostream_read_eof
 };
 
 
@@ -576,58 +558,57 @@ static const raptor_iostream_handler raptor_iostream_read_filename_handler = {
  * 
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
-raptor_new_iostream_from_filename(raptor_world *world, const char *filename)
-{
-  FILE *handle;
-  raptor_iostream* iostr;
-  const raptor_iostream_handler* handler;
-  const unsigned int mode = RAPTOR_IOSTREAM_MODE_READ;
+raptor_iostream *
+raptor_new_iostream_from_filename(raptor_world *world, const char *filename) {
+    FILE *handle;
+    raptor_iostream *iostr;
+    const raptor_iostream_handler *handler;
+    const unsigned int mode = RAPTOR_IOSTREAM_MODE_READ;
 
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  if(!filename)
-    return NULL;
-  
-  raptor_world_open(world);
-  
-  handler = &raptor_iostream_read_filename_handler;
-  if(!raptor_iostream_check_handler(handler, mode))
-    return NULL;
+    if (!filename)
+        return NULL;
 
-  handle = fopen(filename, "rb");
-  if(!handle)
-    return NULL;
-  
-  iostr = RAPTOR_CALLOC(raptor_iostream*, 1, sizeof(*iostr));
-  if(!iostr) {
-    fclose(handle);
-    return NULL;
-  }
+    raptor_world_open(world);
 
-  iostr->world = world;
-  iostr->handler = handler;
-  iostr->user_data = (void*)handle;
-  iostr->mode = mode;
+    handler = &raptor_iostream_read_filename_handler;
+    if (!raptor_iostream_check_handler(handler, mode))
+        return NULL;
 
-  if(iostr->handler->init && 
-     iostr->handler->init(iostr->user_data)) {
-    raptor_free_iostream(iostr);
-    return NULL;
-  }
-  return iostr;
+    handle = fopen(filename, "rb");
+    if (!handle)
+        return NULL;
+
+    iostr = RAPTOR_CALLOC(raptor_iostream * , 1, sizeof(*iostr));
+    if (!iostr) {
+        fclose(handle);
+        return NULL;
+    }
+
+    iostr->world = world;
+    iostr->handler = handler;
+    iostr->user_data = (void *) handle;
+    iostr->mode = mode;
+
+    if (iostr->handler->init &&
+        iostr->handler->init(iostr->user_data)) {
+        raptor_free_iostream(iostr);
+        return NULL;
+    }
+    return iostr;
 }
 
 
 static const raptor_iostream_handler raptor_iostream_read_file_handle_handler = {
-  /* .version     = */ 2,
-  /* .init        = */ NULL,
-  /* .finish      = */ NULL,
-  /* .write_byte  = */ NULL,
-  /* .write_bytes = */ NULL,
-  /* .write_end   = */ NULL,
-  /* .read_bytes  = */ raptor_filename_iostream_read_bytes,
-  /* .read_eof    = */ raptor_filename_iostream_read_eof
+        /* .version     = */ 2,
+        /* .init        = */ NULL,
+        /* .finish      = */ NULL,
+        /* .write_byte  = */ NULL,
+        /* .write_bytes = */ NULL,
+        /* .write_end   = */ NULL,
+        /* .read_bytes  = */ raptor_filename_iostream_read_bytes,
+        /* .read_eof    = */ raptor_filename_iostream_read_eof
 };
 
 
@@ -643,39 +624,38 @@ static const raptor_iostream_handler raptor_iostream_read_file_handle_handler = 
  *
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
-raptor_new_iostream_from_file_handle(raptor_world *world, FILE *handle)
-{
-  raptor_iostream* iostr;
-  const raptor_iostream_handler* handler;
-  const unsigned int mode = RAPTOR_IOSTREAM_MODE_READ;
+raptor_iostream *
+raptor_new_iostream_from_file_handle(raptor_world *world, FILE *handle) {
+    raptor_iostream *iostr;
+    const raptor_iostream_handler *handler;
+    const unsigned int mode = RAPTOR_IOSTREAM_MODE_READ;
 
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  if(!handle)
-    return NULL;
-  
-  raptor_world_open(world);
-  
-  handler = &raptor_iostream_read_file_handle_handler;
-  if(!raptor_iostream_check_handler(handler, mode))
-    return NULL;
+    if (!handle)
+        return NULL;
 
-  iostr = RAPTOR_CALLOC(raptor_iostream*, 1, sizeof(*iostr));
-  if(!iostr)
-    return NULL;
+    raptor_world_open(world);
 
-  iostr->world = world;
-  iostr->handler = handler;
-  iostr->user_data = (void*)handle;
-  iostr->mode = mode;
+    handler = &raptor_iostream_read_file_handle_handler;
+    if (!raptor_iostream_check_handler(handler, mode))
+        return NULL;
 
-  if(iostr->handler->init && 
-     iostr->handler->init(iostr->user_data)) {
-    RAPTOR_FREE(raptor_iostream, iostr);
-    return NULL;
-  }
-  return iostr;
+    iostr = RAPTOR_CALLOC(raptor_iostream * , 1, sizeof(*iostr));
+    if (!iostr)
+        return NULL;
+
+    iostr->world = world;
+    iostr->handler = handler;
+    iostr->user_data = (void *) handle;
+    iostr->mode = mode;
+
+    if (iostr->handler->init &&
+        iostr->handler->init(iostr->user_data)) {
+        RAPTOR_FREE(raptor_iostream, iostr);
+        return NULL;
+    }
+    return iostr;
 }
 
 
@@ -686,23 +666,21 @@ raptor_new_iostream_from_file_handle(raptor_world *world, FILE *handle)
  * Destructor - destroy an iostream.
  **/
 void
-raptor_free_iostream(raptor_iostream *iostr)
-{
-  if(!iostr)
-    return;
-  
-  if(iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
-    raptor_iostream_write_end(iostr);
+raptor_free_iostream(raptor_iostream *iostr) {
+    if (!iostr)
+        return;
 
-  if(iostr->handler->finish)
-    iostr->handler->finish(iostr->user_data);
+    if (iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
+        raptor_iostream_write_end(iostr);
 
-  if((iostr->flags & RAPTOR_IOSTREAM_FLAGS_FREE_HANDLER))
-    RAPTOR_FREE(raptor_iostream_handler, iostr->handler);
+    if (iostr->handler->finish)
+        iostr->handler->finish(iostr->user_data);
 
-  RAPTOR_FREE(raptor_iostream, iostr);
+    if ((iostr->flags & RAPTOR_IOSTREAM_FLAGS_FREE_HANDLER))
+        RAPTOR_FREE(raptor_iostream_handler, iostr->handler);
+
+    RAPTOR_FREE(raptor_iostream, iostr);
 }
-
 
 
 /**
@@ -715,17 +693,16 @@ raptor_free_iostream(raptor_iostream *iostr)
  * Return value: non-0 on failure
  **/
 int
-raptor_iostream_write_byte(const int byte, raptor_iostream *iostr)
-{
-  iostr->offset++;
+raptor_iostream_write_byte(const int byte, raptor_iostream *iostr) {
+    iostr->offset++;
 
-  if(iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
-    return 1;
-  if(!iostr->handler->write_byte)
-    return 1;
-  if(!(iostr->mode & RAPTOR_IOSTREAM_MODE_WRITE))
-    return 1;
-  return iostr->handler->write_byte(iostr->user_data, byte);
+    if (iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
+        return 1;
+    if (!iostr->handler->write_byte)
+        return 1;
+    if (!(iostr->mode & RAPTOR_IOSTREAM_MODE_WRITE))
+        return 1;
+    return iostr->handler->write_byte(iostr->user_data, byte);
 }
 
 
@@ -742,22 +719,21 @@ raptor_iostream_write_byte(const int byte, raptor_iostream *iostr)
  **/
 int
 raptor_iostream_write_bytes(const void *ptr, size_t size, size_t nmemb,
-                            raptor_iostream *iostr)
-{
-  int nobj;
-  
-  if(iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
-    return -1;
-  if(!iostr->handler->write_bytes)
-    return -1;
-  if(!(iostr->mode & RAPTOR_IOSTREAM_MODE_WRITE))
-    return -1;
+                            raptor_iostream *iostr) {
+    int nobj;
 
-  nobj = iostr->handler->write_bytes(iostr->user_data, ptr, size, nmemb);
-  if(nobj > 0)
-    iostr->offset += (size * nobj);
+    if (iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
+        return -1;
+    if (!iostr->handler->write_bytes)
+        return -1;
+    if (!(iostr->mode & RAPTOR_IOSTREAM_MODE_WRITE))
+        return -1;
 
-  return nobj;
+    nobj = iostr->handler->write_bytes(iostr->user_data, ptr, size, nmemb);
+    if (nobj > 0)
+        iostr->offset += (size * nobj);
+
+    return nobj;
 }
 
 
@@ -771,11 +747,10 @@ raptor_iostream_write_bytes(const void *ptr, size_t size, size_t nmemb,
  * Return value: non-0 on failure
  **/
 int
-raptor_iostream_string_write(const void *string, raptor_iostream *iostr)
-{
-  size_t len = strlen((const char*)string);
-  int nobj = raptor_iostream_write_bytes(string, 1, len, iostr);
-  return (RAPTOR_BAD_CAST(size_t, nobj) != len);
+raptor_iostream_string_write(const void *string, raptor_iostream *iostr) {
+    size_t len = strlen((const char *) string);
+    int nobj = raptor_iostream_write_bytes(string, 1, len, iostr);
+    return (RAPTOR_BAD_CAST(size_t, nobj) != len);
 }
 
 
@@ -791,10 +766,9 @@ raptor_iostream_string_write(const void *string, raptor_iostream *iostr)
  **/
 int
 raptor_iostream_counted_string_write(const void *string, size_t len,
-                                     raptor_iostream *iostr) 
-{
-  int nobj = raptor_iostream_write_bytes(string, 1, len, iostr);
-  return (RAPTOR_BAD_CAST(size_t, nobj) != len);
+                                     raptor_iostream *iostr) {
+    int nobj = raptor_iostream_write_bytes(string, 1, len, iostr);
+    return (RAPTOR_BAD_CAST(size_t, nobj) != len);
 }
 
 
@@ -808,12 +782,11 @@ raptor_iostream_counted_string_write(const void *string, size_t len,
  * Return value: non-0 on failure
  **/
 int
-raptor_uri_write(raptor_uri* uri, raptor_iostream* iostr)
-{
-  size_t len;
-  const void *string = raptor_uri_as_counted_string(uri, &len);
-  int nobj = raptor_iostream_write_bytes(string, 1, len, iostr);
-  return (RAPTOR_BAD_CAST(size_t, nobj) != len);
+raptor_uri_write(raptor_uri *uri, raptor_iostream *iostr) {
+    size_t len;
+    const void *string = raptor_uri_as_counted_string(uri, &len);
+    int nobj = raptor_iostream_write_bytes(string, 1, len, iostr);
+    return (RAPTOR_BAD_CAST(size_t, nobj) != len);
 }
 
 
@@ -826,17 +799,16 @@ raptor_uri_write(raptor_uri* uri, raptor_iostream* iostr)
  * Return value: non-0 on failure
  **/
 int
-raptor_iostream_write_end(raptor_iostream *iostr)
-{
-  int rc = 0;
-  
-  if(iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
-    return 1;
-  if(iostr->handler->write_end)
-    rc = iostr->handler->write_end(iostr->user_data);
-  iostr->flags |= RAPTOR_IOSTREAM_FLAGS_EOF;
+raptor_iostream_write_end(raptor_iostream *iostr) {
+    int rc = 0;
 
-  return rc;
+    if (iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
+        return 1;
+    if (iostr->handler->write_end)
+        rc = iostr->handler->write_end(iostr->user_data);
+    iostr->flags |= RAPTOR_IOSTREAM_FLAGS_EOF;
+
+    return rc;
 }
 
 
@@ -850,19 +822,18 @@ raptor_iostream_write_end(raptor_iostream *iostr)
  * Return value: non-0 on failure
  **/
 int
-raptor_stringbuffer_write(raptor_stringbuffer *sb, raptor_iostream* iostr)
-{
-  size_t length;
-  if(!sb)
-    return 1;
-  
-  length = raptor_stringbuffer_length(sb);
-  if(length) {
-    int nobj = raptor_iostream_write_bytes(raptor_stringbuffer_as_string(sb),
-                                            1, length, iostr);
-    return (RAPTOR_BAD_CAST(size_t, nobj) != length);
-  } else
-    return 0;
+raptor_stringbuffer_write(raptor_stringbuffer *sb, raptor_iostream *iostr) {
+    size_t length;
+    if (!sb)
+        return 1;
+
+    length = raptor_stringbuffer_length(sb);
+    if (length) {
+        int nobj = raptor_iostream_write_bytes(raptor_stringbuffer_as_string(sb),
+                                               1, length, iostr);
+        return (RAPTOR_BAD_CAST(size_t, nobj) != length);
+    } else
+        return 0;
 }
 
 
@@ -876,37 +847,36 @@ raptor_stringbuffer_write(raptor_stringbuffer *sb, raptor_iostream* iostr)
  * Return value: non-0 on failure
  **/
 int
-raptor_iostream_decimal_write(int integer, raptor_iostream* iostr)
-{
-  /* enough for 64 bit signed integer
-   * INT64_MAX is  9223372036854775807 (19 digits) + 1 for sign 
-   */
-  unsigned char buf[20];
-  unsigned char *p;
-  int i = integer;
-  size_t length = 1;
-  int nobj;
+raptor_iostream_decimal_write(int integer, raptor_iostream *iostr) {
+    /* enough for 64 bit signed integer
+     * INT64_MAX is  9223372036854775807 (19 digits) + 1 for sign
+     */
+    unsigned char buf[20];
+    unsigned char *p;
+    int i = integer;
+    size_t length = 1;
+    int nobj;
 
-  if(integer < 0) {
-    length++;
-    i= -integer;
-  }
-  while(i /= 10)
-    length++;
+    if (integer < 0) {
+        length++;
+        i = -integer;
+    }
+    while (i /= 10)
+        length++;
 
-  p = buf+length-1;
-  i = integer;
-  if(i < 0)
-    i= -i;
-  do {
-    *p-- ='0'+(i %10);
-    i /= 10;
-  } while(i);
-  if(integer < 0)
-    *p= '-';
-  
-  nobj = raptor_iostream_write_bytes(buf, 1, length, iostr);
-  return (RAPTOR_BAD_CAST(size_t, nobj) != length);
+    p = buf + length - 1;
+    i = integer;
+    if (i < 0)
+        i = -i;
+    do {
+        *p-- = '0' + (i % 10);
+        i /= 10;
+    } while (i);
+    if (integer < 0)
+        *p = '-';
+
+    nobj = raptor_iostream_write_bytes(buf, 1, length, iostr);
+    return (RAPTOR_BAD_CAST(size_t, nobj) != length);
 }
 
 
@@ -924,26 +894,26 @@ raptor_iostream_decimal_write(int integer, raptor_iostream* iostr)
  **/
 int
 raptor_iostream_hexadecimal_write(unsigned int integer, int width,
-                                  raptor_iostream* iostr)
-{
-  char *buf;
-  int nobj;
+                                  raptor_iostream *iostr) {
+    char *buf;
+    int nobj;
 
-  if(width < 1)
-    return 1;
-  
-  buf = RAPTOR_MALLOC(char*, width + 1);
-  if(!buf)
-    return 1;
-  
-  (void)raptor_format_integer(buf, width + 1, integer, /* base */ 16,
-                              width, '0');
+    if (width < 1)
+        return 1;
 
-  nobj = raptor_iostream_write_bytes(buf, 1, width, iostr);
-  RAPTOR_FREE(char*, buf);
-  return (nobj != width);
+    buf = RAPTOR_MALLOC(
+    char*, width + 1);
+    if (!buf)
+        return 1;
+
+    (void) raptor_format_integer(buf, width + 1, integer, /* base */ 16,
+                                 width, '0');
+
+    nobj = raptor_iostream_write_bytes(buf, 1, width, iostr);
+    RAPTOR_FREE(
+    char*, buf);
+    return (nobj != width);
 }
-
 
 
 /**
@@ -959,28 +929,27 @@ raptor_iostream_hexadecimal_write(unsigned int integer, int width,
  **/
 int
 raptor_iostream_read_bytes(void *ptr, size_t size, size_t nmemb,
-                           raptor_iostream *iostr)
-{
-  int count;
-  
-  if(!(iostr->mode & RAPTOR_IOSTREAM_MODE_READ))
-    return -1;
+                           raptor_iostream *iostr) {
+    int count;
 
-  if(iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
-    return 0;
+    if (!(iostr->mode & RAPTOR_IOSTREAM_MODE_READ))
+        return -1;
 
-  if(!iostr->handler->read_bytes)
-    count= -1;
-  else
-    count = iostr->handler->read_bytes(iostr->user_data, ptr, size, nmemb);
+    if (iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF)
+        return 0;
 
-  if(count > 0)
-    iostr->offset += (size*count);
+    if (!iostr->handler->read_bytes)
+        count = -1;
+    else
+        count = iostr->handler->read_bytes(iostr->user_data, ptr, size, nmemb);
 
-  if(RAPTOR_BAD_CAST(size_t, count) < nmemb)
-    iostr->flags |= RAPTOR_IOSTREAM_FLAGS_EOF;
-  
-  return count;
+    if (count > 0)
+        iostr->offset += (size * count);
+
+    if (RAPTOR_BAD_CAST(size_t, count) < nmemb)
+        iostr->flags |= RAPTOR_IOSTREAM_FLAGS_EOF;
+
+    return count;
 }
 
 
@@ -993,86 +962,83 @@ raptor_iostream_read_bytes(void *ptr, size_t size, size_t nmemb,
  * Return value: non-0 if EOF (or not a read iostream)
  **/
 int
-raptor_iostream_read_eof(raptor_iostream *iostr)
-{
-  /* Streams without read are always EOF */
-  if(!(iostr->mode & RAPTOR_IOSTREAM_MODE_READ))
-    return 1;
-  
-  if(!(iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF) &&
-     iostr->handler->read_eof &&
-     iostr->handler->read_eof(iostr->user_data))
-    iostr->flags |= RAPTOR_IOSTREAM_FLAGS_EOF;
+raptor_iostream_read_eof(raptor_iostream *iostr) {
+    /* Streams without read are always EOF */
+    if (!(iostr->mode & RAPTOR_IOSTREAM_MODE_READ))
+        return 1;
 
-  return ((iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF) != 0);
+    if (!(iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF) &&
+        iostr->handler->read_eof &&
+        iostr->handler->read_eof(iostr->user_data))
+        iostr->flags |= RAPTOR_IOSTREAM_FLAGS_EOF;
+
+    return ((iostr->flags & RAPTOR_IOSTREAM_FLAGS_EOF) != 0);
 }
 
 
 struct raptor_read_string_iostream_context {
-  /* input buffer */
-  void* string;
-  size_t length;
-  /* pointer into buffer */
-  size_t offset;
+    /* input buffer */
+    void *string;
+    size_t length;
+    /* pointer into buffer */
+    size_t offset;
 };
 
 
 /* Local handlers for reading from a string */
 
 static void
-raptor_read_string_iostream_finish(void *user_data) 
-{
-  struct raptor_read_string_iostream_context* con;
+raptor_read_string_iostream_finish(void *user_data) {
+    struct raptor_read_string_iostream_context *con;
 
-  con = (struct raptor_read_string_iostream_context*)user_data;
-  RAPTOR_FREE(raptor_read_string_iostream_context, con);
-  return;
+    con = (struct raptor_read_string_iostream_context *) user_data;
+    RAPTOR_FREE(raptor_read_string_iostream_context, con);
+    return;
 }
 
 static int
-raptor_read_string_iostream_read_bytes(void *user_data, void *ptr, 
-                                       size_t size, size_t nmemb)
-{
-  struct raptor_read_string_iostream_context* con;
-  size_t avail;
-  size_t blen;
+raptor_read_string_iostream_read_bytes(void *user_data, void *ptr,
+                                       size_t size, size_t nmemb) {
+    struct raptor_read_string_iostream_context *con;
+    size_t avail;
+    size_t blen;
 
-  if(!ptr || size <= 0 || !nmemb)
-    return -1;
-  
-  con = (struct raptor_read_string_iostream_context*)user_data;
-  if(con->offset >= con->length)
-    return 0;
+    if (!ptr || size <= 0 || !nmemb)
+        return -1;
 
-  avail = (con->length - con->offset) / size;
-  if(avail > nmemb)
-    avail = nmemb;
-  blen = (avail * size);
-  memcpy(ptr, (char*)con->string + con->offset, blen);
-  con->offset += blen;
-  
-  return RAPTOR_BAD_CAST(int, avail);
+    con = (struct raptor_read_string_iostream_context *) user_data;
+    if (con->offset >= con->length)
+        return 0;
+
+    avail = (con->length - con->offset) / size;
+    if (avail > nmemb)
+        avail = nmemb;
+    blen = (avail * size);
+    memcpy(ptr, (char *) con->string + con->offset, blen);
+    con->offset += blen;
+
+    return RAPTOR_BAD_CAST(
+    int, avail);
 }
 
 static int
-raptor_read_string_iostream_read_eof(void *user_data)
-{
-  struct raptor_read_string_iostream_context* con;
+raptor_read_string_iostream_read_eof(void *user_data) {
+    struct raptor_read_string_iostream_context *con;
 
-  con = (struct raptor_read_string_iostream_context*)user_data;
-  return (con->offset >= con->length);
+    con = (struct raptor_read_string_iostream_context *) user_data;
+    return (con->offset >= con->length);
 }
 
 
 static const raptor_iostream_handler raptor_iostream_read_string_handler = {
-  /* .version     = */ 2,
-  /* .init        = */ NULL,
-  /* .finish      = */ raptor_read_string_iostream_finish,
-  /* .write_byte  = */ NULL,
-  /* .write_bytes = */ NULL,
-  /* .write_end   = */ NULL,
-  /* .read_bytes  = */ raptor_read_string_iostream_read_bytes,
-  /* .read_eof    = */ raptor_read_string_iostream_read_eof
+        /* .version     = */ 2,
+        /* .init        = */ NULL,
+        /* .finish      = */ raptor_read_string_iostream_finish,
+        /* .write_byte  = */ NULL,
+        /* .write_bytes = */ NULL,
+        /* .write_end   = */ NULL,
+        /* .read_bytes  = */ raptor_read_string_iostream_read_bytes,
+        /* .read_eof    = */ raptor_read_string_iostream_read_eof
 };
 
 
@@ -1086,50 +1052,50 @@ static const raptor_iostream_handler raptor_iostream_read_string_handler = {
  *
  * Return value: new #raptor_iostream object or NULL on failure
  **/
-raptor_iostream*
+raptor_iostream *
 raptor_new_iostream_from_string(raptor_world *world,
-                                void *string, size_t length)
-{
-  raptor_iostream* iostr;
-  struct raptor_read_string_iostream_context* con;
-  const raptor_iostream_handler* handler;
-  const unsigned int mode = RAPTOR_IOSTREAM_MODE_READ;
+                                void *string, size_t length) {
+    raptor_iostream *iostr;
+    struct raptor_read_string_iostream_context *con;
+    const raptor_iostream_handler *handler;
+    const unsigned int mode = RAPTOR_IOSTREAM_MODE_READ;
 
-  RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
+    RAPTOR_CHECK_CONSTRUCTOR_WORLD(world);
 
-  if(!string)
-    return NULL;
-  
-  raptor_world_open(world);
-  
-  handler = &raptor_iostream_read_string_handler;
-  if(!raptor_iostream_check_handler(handler, mode))
-    return NULL;
+    if (!string)
+        return NULL;
 
-  iostr = RAPTOR_CALLOC(raptor_iostream*, 1, sizeof(*iostr));
-  if(!iostr)
-    return NULL;
+    raptor_world_open(world);
 
-  con = RAPTOR_CALLOC(struct raptor_read_string_iostream_context*, 1,
-                      sizeof(*con));
-  if(!con) {
-    RAPTOR_FREE(raptor_iostream, iostr);
-    return NULL;
-  }
+    handler = &raptor_iostream_read_string_handler;
+    if (!raptor_iostream_check_handler(handler, mode))
+        return NULL;
 
-  con->string = string;
-  con->length = length;
+    iostr = RAPTOR_CALLOC(raptor_iostream * , 1, sizeof(*iostr));
+    if (!iostr)
+        return NULL;
 
-  iostr->world = world;
-  iostr->handler = handler;
-  iostr->user_data = (void*)con;
-  iostr->mode = mode;
+    con = RAPTOR_CALLOC(
+    struct raptor_read_string_iostream_context*, 1,
+            sizeof(*con));
+    if (!con) {
+        RAPTOR_FREE(raptor_iostream, iostr);
+        return NULL;
+    }
 
-  if(iostr->handler->init && iostr->handler->init(iostr->user_data)) {
-    raptor_free_iostream(iostr);
-    return NULL;
-  }
-  return iostr;
+    con->string = string;
+    con->length = length;
+
+    iostr->world = world;
+    iostr->handler = handler;
+    iostr->user_data = (void *) con;
+    iostr->mode = mode;
+
+    if (iostr->handler->init && iostr->handler->init(iostr->user_data)) {
+        raptor_free_iostream(iostr);
+        return NULL;
+    }
+    return iostr;
 }
 
 
@@ -1142,22 +1108,20 @@ raptor_new_iostream_from_string(raptor_world *world,
  * Return value: offset in iostream
  **/
 unsigned long
-raptor_iostream_tell(raptor_iostream *iostr)
-{
-  return RAPTOR_BAD_CAST(unsigned long, iostr->offset);
+raptor_iostream_tell(raptor_iostream *iostr) {
+    return RAPTOR_BAD_CAST(
+    unsigned long, iostr->offset);
 }
 
 
 /* internal */
-raptor_world*
-raptor_iostream_get_world(raptor_iostream *iostr)
-{
-  return iostr->world;
+raptor_world *
+raptor_iostream_get_world(raptor_iostream *iostr) {
+    return iostr->world;
 }
 
 
 #endif
-
 
 
 #ifdef STANDALONE

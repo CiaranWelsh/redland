@@ -1,4 +1,4 @@
-prefix=/home/ciaran/Software/redland/raptor2-2.0.15/install
+prefix=/usr/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include/raptor2
@@ -7,7 +7,7 @@ Name: Raptor RDF Syntax Library
 Description: RDF Syntax Library
 Version: 2.0.15
 Libs: -L${libdir} -lraptor2
-Libs.private:  -lxml2
+Libs.private:  -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2
 Cflags: -I${includedir}
 Requires:
 

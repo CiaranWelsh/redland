@@ -89,9 +89,9 @@ build_triplet = x86_64-pc-linux-gnu
 host_triplet = x86_64-pc-linux-gnu
 subdir = src/win32
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/build/libtool.m4 \
-	$(top_srcdir)/build/ltargz.m4 $(top_srcdir)/build/ltdl.m4 \
-	$(top_srcdir)/build/ltoptions.m4 \
+am__aclocal_m4_deps = $(top_srcdir)/build/gtk-doc.m4 \
+	$(top_srcdir)/build/libtool.m4 $(top_srcdir)/build/ltargz.m4 \
+	$(top_srcdir)/build/ltdl.m4 $(top_srcdir)/build/ltoptions.m4 \
 	$(top_srcdir)/build/ltsugar.m4 \
 	$(top_srcdir)/build/ltversion.m4 \
 	$(top_srcdir)/build/lt~obsolete.m4 $(top_srcdir)/acinclude.m4 \
@@ -130,7 +130,7 @@ AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
 AUTOCONF = autoconf
-AUTOHEADER = ${SHELL} /home/ciaran/Software/redland/redland-1.0.17/build/missing autoheader
+AUTOHEADER = ${SHELL} /mnt/d/redland/redland-1.0.17/build/missing autoheader
 AUTOMAKE = automake
 AWK = gawk
 CC = gcc
@@ -207,7 +207,7 @@ LT_DLLOADERS =  libltdl/dlopen.la
 LT_DLPREOPEN = -dlpreopen libltdl/dlopen.la 
 LT_SYS_LIBRARY_PATH = 
 MAINT = 
-MAKEINFO = ${SHELL} /home/ciaran/Software/redland/redland-1.0.17/build/missing makeinfo
+MAKEINFO = ${SHELL} /mnt/d/redland/redland-1.0.17/build/missing makeinfo
 MANIFEST_TOOL = :
 MEM = 
 MEM_LIBS = 
@@ -263,10 +263,10 @@ TSTORE_LIBS =
 VERSION = 1.0.17
 VIRTUOSO_CPPFLAGS = 
 VIRTUOSO_LIBS = 
-abs_builddir = /home/ciaran/Software/redland/redland-1.0.17/src/win32
-abs_srcdir = /home/ciaran/Software/redland/redland-1.0.17/src/win32
-abs_top_builddir = /home/ciaran/Software/redland/redland-1.0.17
-abs_top_srcdir = /home/ciaran/Software/redland/redland-1.0.17
+abs_builddir = /mnt/d/redland/redland-1.0.17/src/win32
+abs_srcdir = /mnt/d/redland/redland-1.0.17/src/win32
+abs_top_builddir = /mnt/d/redland/redland-1.0.17
+abs_top_srcdir = /mnt/d/redland/redland-1.0.17
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -295,7 +295,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/ciaran/Software/redland/redland-1.0.17/build/install-sh
+install_sh = ${SHELL} /mnt/d/redland/redland-1.0.17/build/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -306,7 +306,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/ciaran/Software/redland/redland-1.0.17/install
+prefix = /mnt/d/redland/redland-1.0.17/install.linux
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
