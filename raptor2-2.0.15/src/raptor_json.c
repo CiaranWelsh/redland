@@ -41,6 +41,7 @@
 #endif
 
 #include <yajl/yajl_parse.h>
+#include <yajl/yajl_version.h>
 
 /* Raptor includes */
 #include "raptor2.h"
@@ -89,7 +90,7 @@ typedef enum {
 struct raptor_json_parser_context_s {
 #ifdef HAVE_YAJL2
 #else
-  yajl_parser_config config;
+//  yajl_parser_config config;
 #endif
   yajl_handle handle;
 
@@ -575,8 +576,8 @@ raptor_json_parse_init(raptor_parser* rdf_parser, const char *name)
   /* Configure the parser */
 #ifdef HAVE_YAJL2
 #else
-  context->config.allowComments = 1;
-  context->config.checkUTF8 = 0;
+//  context->config.allowComments = 1;
+//  context->config.checkUTF8 = 0;
 #endif
 
   return 0;
@@ -617,10 +618,10 @@ raptor_json_parse_chunk(raptor_parser* rdf_parser,
     status = yajl_parse(context->handle, s, RAPTOR_BAD_CAST(int, len));
 
     if(status != yajl_status_ok 
-#ifdef HAVE_YAJL2
-#else
-       && status != yajl_status_insufficient_data
-#endif
+//#ifdef HAVE_YAJL2
+//#else
+//       && status != yajl_status_insufficient_data
+//#endif
     )
     {
       unsigned char * str = yajl_get_error(context->handle, 1, s, RAPTOR_BAD_CAST(int, len));
@@ -632,10 +633,6 @@ raptor_json_parse_chunk(raptor_parser* rdf_parser,
 
   if(is_end) {
     /* parse any remaining buffered data */
-#ifdef HAVE_YAJL2
-#else
-#define yajl_complete_parse(h) yajl_parse_complete(h)
-#endif
     status = yajl_complete_parse(context->handle);
 
     if(status != yajl_status_ok)
@@ -666,10 +663,10 @@ raptor_json_parse_start(raptor_parser* rdf_parser)
   /* Initialise a new parser */
   context->handle = yajl_alloc(
     &raptor_json_yajl_callbacks,
-#ifdef HAVE_YAJL2
-#else
-    &context->config,
-#endif
+//#ifdef HAVE_YAJL2
+//#else
+//    &context->config,
+//#endif
     &raptor_json_yajl_alloc_funcs,
     (void *)rdf_parser
   );
