@@ -55,7 +55,7 @@ add_library(CURL::libcurl SHARED IMPORTED)
 
 set_target_properties(CURL::libcurl PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "wldap32;winmm;ws2_32;advapi32"
+  INTERFACE_LINK_LIBRARIES "dl;-lpthread;OpenSSL::SSL;OpenSSL::Crypto;ZLIB::ZLIB"
 )
 
 # Create imported target CURL::curl
