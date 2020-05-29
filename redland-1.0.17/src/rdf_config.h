@@ -29,31 +29,31 @@
 #define HAVE_ARGZ_STRINGIFY 1
 
 /* BDB has close method with 2 args */
-/* #undef HAVE_BDB_CLOSE_2_ARGS */
+#define HAVE_BDB_CLOSE_2_ARGS 1
 
 /* BDB defines DBC */
-/* #undef HAVE_BDB_CURSOR */
+#define HAVE_BDB_CURSOR 1
 
 /* BDB cursor method has 4 arguments */
-/* #undef HAVE_BDB_CURSOR_4_ARGS */
+#define HAVE_BDB_CURSOR_4_ARGS 1
 
 /* BDB defines DB_TXN */
-/* #undef HAVE_BDB_DB_TXN */
+#define HAVE_BDB_DB_TXN 1
 
 /* BDB has fd method with 2 args */
-/* #undef HAVE_BDB_FD_2_ARGS */
+#define HAVE_BDB_FD_2_ARGS 1
 
 /* Have BDB hash support */
-/* #undef HAVE_BDB_HASH */
+#define HAVE_BDB_HASH 1
 
 /* BDB has open method with 6 args */
 /* #undef HAVE_BDB_OPEN_6_ARGS */
 
 /* BDB has open method with 7 args */
-/* #undef HAVE_BDB_OPEN_7_ARGS */
+#define HAVE_BDB_OPEN_7_ARGS 1
 
 /* BDB has set_flags method */
-/* #undef HAVE_BDB_SET_FLAGS */
+#define HAVE_BDB_SET_FLAGS 1
 
 /* Define to 1 if the system has the type `byte'. */
 /* #undef HAVE_BYTE */
@@ -65,10 +65,10 @@
 /* #undef HAVE_DBOPEN */
 
 /* BDB has db_create method */
-/* #undef HAVE_DB_CREATE */
+#define HAVE_DB_CREATE 1
 
 /* Define to 1 if you have the <db.h> header file. */
-/* #undef HAVE_DB_H */
+#define HAVE_DB_H 1
 
 /* BDB has db_open method */
 /* #undef HAVE_DB_OPEN */
@@ -322,10 +322,10 @@
 #define SIZEOF_UNSIGNED_LONG_LONG 8
 
 /* define to SQLINTEGER if not defined in the ODBC headers */
-#define SQLLEN SQLINTEGER
+/* #undef SQLLEN */
 
 /* define to SQLUINTEGER if not defined in the ODBC headers */
-#define SQLULEN SQLUINTEGER
+/* #undef SQLULEN */
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -355,7 +355,7 @@
 /* #undef STORAGE_TSTORE */
 
 /* Building Virtuoso storage */
-/* #undef STORAGE_VIRTUOSO */
+#define STORAGE_VIRTUOSO 1
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1

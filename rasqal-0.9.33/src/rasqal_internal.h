@@ -21,8 +21,6 @@
  * 
  */
 
-
-
 #ifndef RASQAL_INTERNAL_H
 #define RASQAL_INTERNAL_H
 

@@ -36,7 +36,7 @@
 #endif
 #include <stdarg.h>
 
-#include <raptor.h>
+#include <raptor2.h>
 
 #include "rasqal.h"
 #include "rasqal_internal.h"

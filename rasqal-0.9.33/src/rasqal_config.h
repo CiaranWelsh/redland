@@ -32,10 +32,10 @@
 #define HAVE_GETTIMEOFDAY 1
 
 /* Define to 1 if you have the <gmp.h> header file. */
-/* #undef HAVE_GMP_H */
+#define HAVE_GMP_H 1
 
 /* Have gmp_version constant */
-/* #undef HAVE_GMP_VERSION */
+#define HAVE_GMP_VERSION 1
 
 /* Define to 1 if you have the `gmtime_r' function. */
 #define HAVE_GMTIME_R 1
@@ -194,13 +194,13 @@
 /* #undef RANDOM_ALGO_RAND_R */
 
 /* Decimal from GNU MP library */
-/* #undef RASQAL_DECIMAL_GMP */
+#define RASQAL_DECIMAL_GMP 1
 
 /* Decimal from MPFR library */
 /* #undef RASQAL_DECIMAL_MPFR */
 
 /* Decimal without a library */
-#define RASQAL_DECIMAL_NONE 1
+/* #undef RASQAL_DECIMAL_NONE */
 
 /* Use gcrypt library for message digests */
 /* #undef RASQAL_DIGEST_GCRYPT */

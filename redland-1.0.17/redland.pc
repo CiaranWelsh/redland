@@ -1,4 +1,4 @@
-prefix=/mnt/d/redland/redland-1.0.17/install.linux
+prefix=/usr/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
@@ -14,5 +14,5 @@ Description: Redland RDF API and triple store library
 Requires.private: raptor2 >= 2.0.7, rasqal >= 0.9.25, rasqal <= 0.9.99
 Version: 1.0.17
 Libs: -L${libdir} -lrdf
-Libs.private:  
+Libs.private:  -L/usr/lib/x86_64-linux-gnu -ldb-5.3
 Cflags: -I${includedir}

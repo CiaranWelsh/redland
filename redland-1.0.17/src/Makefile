@@ -119,14 +119,14 @@ am__append_2 = rdf_storage_file.c
 #am__append_4 = librdf_storage_mysql.la
 #am__append_5 = librdf_storage_sqlite.la
 #am__append_6 = librdf_storage_postgresql.la
-#am__append_7 = librdf_storage_virtuoso.la 
+am__append_7 = librdf_storage_virtuoso.la 
 ##am__append_8 = rdf_storage_tstore.c
 ##am__append_9 = rdf_storage_mysql.c
 ##am__append_10 = rdf_storage_sqlite.c
 ##am__append_11 = rdf_storage_postgresql.c
-##am__append_12 = rdf_storage_virtuoso.c rdf_query_virtuoso.c rdf_storage_virtuoso_internal.h
+#am__append_12 = rdf_storage_virtuoso.c rdf_query_virtuoso.c rdf_storage_virtuoso_internal.h
 #am__append_13 = mysql-v1.ttl mysql-v2.ttl
-am__append_14 = -DREDLAND_MODULE_PATH="\""/usr/local/lib/redland:${exec_prefix}/lib/redland"\""
+am__append_14 = -DREDLAND_MODULE_PATH="\""${exec_prefix}/lib/redland"\""
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/build/gtk-doc.m4 \
@@ -205,8 +205,8 @@ am__objects_2 = rdf_storage_file.lo
 ##am__objects_4 = rdf_storage_mysql.lo
 ##am__objects_5 = rdf_storage_sqlite.lo
 ##am__objects_6 = rdf_storage_postgresql.lo
-##am__objects_7 = rdf_storage_virtuoso.lo \
-##	rdf_query_virtuoso.lo
+#am__objects_7 = rdf_storage_virtuoso.lo \
+#	rdf_query_virtuoso.lo
 am_librdf_la_OBJECTS = rdf_init.lo rdf_raptor.lo rdf_uri.lo \
 	rdf_digest.lo rdf_hash.lo rdf_hash_cursor.lo \
 	rdf_hash_memory.lo rdf_model.lo rdf_model_storage.lo \
@@ -278,21 +278,21 @@ librdf_storage_tstore_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(LDFLAGS) -o $@
 #am_librdf_storage_tstore_la_rpath =  \
 #	-rpath $(plugindir)
-#librdf_storage_virtuoso_la_DEPENDENCIES =  \
-#	librdf.la
+librdf_storage_virtuoso_la_DEPENDENCIES =  \
+	librdf.la
 am__librdf_storage_virtuoso_la_SOURCES_DIST = rdf_storage_virtuoso.c \
 	rdf_query_virtuoso.c rdf_storage_virtuoso_internal.h
-#am_librdf_storage_virtuoso_la_OBJECTS = librdf_storage_virtuoso_la-rdf_storage_virtuoso.lo \
-#	librdf_storage_virtuoso_la-rdf_query_virtuoso.lo
+am_librdf_storage_virtuoso_la_OBJECTS = librdf_storage_virtuoso_la-rdf_storage_virtuoso.lo \
+	librdf_storage_virtuoso_la-rdf_query_virtuoso.lo
 librdf_storage_virtuoso_la_OBJECTS =  \
 	$(am_librdf_storage_virtuoso_la_OBJECTS)
 librdf_storage_virtuoso_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(AM_CFLAGS) $(CFLAGS) $(librdf_storage_virtuoso_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-#am_librdf_storage_virtuoso_la_rpath =  \
-#	-rpath \
-#	$(plugindir)
+am_librdf_storage_virtuoso_la_rpath =  \
+	-rpath \
+	$(plugindir)
 am_rdf_storage_sql_test_OBJECTS = rdf_storage_sql_test.$(OBJEXT)
 rdf_storage_sql_test_OBJECTS = $(am_rdf_storage_sql_test_OBJECTS)
 rdf_storage_sql_test_DEPENDENCIES = librdf.la
@@ -609,7 +609,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -DLIBRDF_INTERNAL=1 -g 
 CPP = gcc -E
-CPPFLAGS =  -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wsign-conversion -Wstrict-prototypes -Wswitch-enum -Wundef -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-system-headers -Wno-unused-parameter 
+CPPFLAGS =  -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wsign-conversion -Wstrict-prototypes -Wswitch-enum -Wundef -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-system-headers -Wno-unused-parameter  
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -631,8 +631,8 @@ GTKDOC_DEPS_CFLAGS = -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.
 GTKDOC_DEPS_LIBS = -lgobject-2.0 -lglib-2.0
 GTKDOC_MKPDF = /usr/bin/gtkdoc-mkpdf
 GTKDOC_REBASE = /usr/bin/gtkdoc-rebase
-HASH_OBJS = 
-HASH_SRCS = 
+HASH_OBJS =  rdf_hash_bdb.lo
+HASH_SRCS =  rdf_hash_bdb.c
 HAVE_RAPTOR2_API = 1
 HTML_DIR = ${datadir}/gtk-doc/html
 INCLTDL = 
@@ -653,19 +653,19 @@ LIBOBJS =
 LIBRDF_CPPFLAGS = 
 LIBRDF_DIRECT_LIBS =  -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2
 LIBRDF_EXTERNAL_CPPFLAGS = -I/usr/local/include/raptor2 -I/usr/local/include/rasqal -I/usr/local/include/raptor2
-LIBRDF_EXTERNAL_LIBS =  -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2  
+LIBRDF_EXTERNAL_LIBS =  -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2   -L/usr/lib/x86_64-linux-gnu -ldb-5.3
 LIBRDF_INTERNAL_CPPFLAGS = 
 LIBRDF_INTERNAL_DEPS =  
 LIBRDF_INTERNAL_LIBS =  -lltdl
 LIBRDF_LDFLAGS = 
 LIBRDF_LIBTOOLLIBS = librdf.la
 LIBRDF_LIBTOOL_VERSION = 0:0:0
-LIBRDF_PKGCONFIG_PRIVATE_LIBS = 
+LIBRDF_PKGCONFIG_PRIVATE_LIBS = -L/usr/lib/x86_64-linux-gnu -ldb-5.3
 LIBRDF_VERSION_DECIMAL = 10017
 LIBRDF_VERSION_MAJOR = 1
 LIBRDF_VERSION_MINOR = 0
 LIBRDF_VERSION_RELEASE = 17
-LIBS = 
+LIBS =  -L/usr/lib/x86_64-linux-gnu -ldb-5.3
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
@@ -692,7 +692,7 @@ NMEDIT =
 OBJDUMP = objdump
 OBJEXT = o
 ODBC_CFLAGS = 
-ODBC_LIBS = 
+ODBC_LIBS = -lodbc
 OTOOL = 
 OTOOL64 = 
 PACKAGE = redland
@@ -721,7 +721,7 @@ RASQAL_MIN_VERSION = 0.9.25
 RECHO = echo
 RECHO_C = 
 RECHO_N = -n
-REDLAND_MODULE_PATH = /usr/local/lib/redland:${exec_prefix}/lib/redland
+REDLAND_MODULE_PATH = ${exec_prefix}/lib/redland
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
@@ -736,7 +736,7 @@ TSTORE_CPPFLAGS =
 TSTORE_LIBS = 
 VERSION = 1.0.17
 VIRTUOSO_CPPFLAGS = 
-VIRTUOSO_LIBS = 
+VIRTUOSO_LIBS = -lodbc
 abs_builddir = /mnt/d/redland/redland-1.0.17/src
 abs_srcdir = /mnt/d/redland/redland-1.0.17/src
 abs_top_builddir = /mnt/d/redland/redland-1.0.17
@@ -780,7 +780,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /mnt/d/redland/redland-1.0.17/install.linux
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
@@ -864,16 +864,16 @@ plugin_LTLIBRARIES = $(am__append_3) \
 #librdf_storage_postgresql_la_CPPFLAGS = 
 #librdf_storage_postgresql_la_LIBADD =  librdf.la
 #librdf_storage_postgresql_la_LDFLAGS = -module -avoid-version
-#librdf_storage_virtuoso_la_SOURCES = rdf_storage_virtuoso.c rdf_query_virtuoso.c rdf_storage_virtuoso_internal.h
-#librdf_storage_virtuoso_la_CPPFLAGS = 
-#librdf_storage_virtuoso_la_LIBADD =  librdf.la -lrasqal
-#librdf_storage_virtuoso_la_LDFLAGS = -module -avoid-version
+librdf_storage_virtuoso_la_SOURCES = rdf_storage_virtuoso.c rdf_query_virtuoso.c rdf_storage_virtuoso_internal.h
+librdf_storage_virtuoso_la_CPPFLAGS = 
+librdf_storage_virtuoso_la_LIBADD = -lodbc librdf.la -lrasqal
+librdf_storage_virtuoso_la_LDFLAGS = -module -avoid-version
 librdf_la_LIBADD = \
-  rdf_digest_md5.lo rdf_digest_sha1.lo  \
+  rdf_digest_md5.lo rdf_digest_sha1.lo  rdf_hash_bdb.lo \
  -lltdl
 
 librdf_la_DEPENDENCIES = \
- rdf_digest_md5.lo rdf_digest_sha1.lo  \
+ rdf_digest_md5.lo rdf_digest_sha1.lo  rdf_hash_bdb.lo \
  
 
 EXTRA_librdf_la_SOURCES = rdf_hash_bdb.c \
@@ -882,7 +882,7 @@ rdf_parser_raptor.c
 
 EXTRA_DIST = redland.spec redland.spec.in mysql-v1.ttl mysql-v2.ttl
 librdf_la_LDFLAGS = -version-info 0:0:0 \
-  -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2  
+  -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2   -L/usr/lib/x86_64-linux-gnu -ldb-5.3
 
 pkgdata_DATA = $(am__append_13)
 local_tests = rdf_storage_sql_test$(EXEEXT)

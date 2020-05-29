@@ -127,7 +127,7 @@ if test "$echo_libtool_libs" = "yes"; then
 fi
 
 if test "$echo_libs" = "yes"; then
-  echo -L/mnt/d/redland/redland-1.0.17/src/.libs -lrdf   -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2   `$rasqal_config --libs` `$raptor_config --libs`
+  echo -L/mnt/d/redland/redland-1.0.17/src/.libs -lrdf   -L/usr/local/lib -lraptor2 -L/usr/local/lib -lrasqal -lraptor2 -L/usr/local/lib -lrasqal -lraptor2   -L/usr/lib/x86_64-linux-gnu -ldb-5.3 `$rasqal_config --libs` `$raptor_config --libs`
 fi
 
 if test "$echo_swig" = "yes"; then  

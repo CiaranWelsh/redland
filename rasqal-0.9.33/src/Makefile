@@ -138,7 +138,8 @@ am__aclocal_m4_deps = $(top_srcdir)/build/gtk-doc.m4 \
 	$(top_srcdir)/build/ltoptions.m4 \
 	$(top_srcdir)/build/ltsugar.m4 \
 	$(top_srcdir)/build/ltversion.m4 \
-	$(top_srcdir)/build/lt~obsolete.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/build/lt~obsolete.m4 $(top_srcdir)/build/pkg.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(noinst_HEADERS) \
@@ -703,7 +704,7 @@ LEXLIB = -lfl
 LEX_OUTPUT_ROOT = lex.yy
 LIBGCRYPT_CONFIG = 
 LIBOBJS = 
-LIBS =   -L/usr/local/lib -lraptor2 -lpcre -lm  $(MEM_LIBS)
+LIBS =   -L/usr/local/lib -lraptor2 -lpcre -lm  -lgmp $(MEM_LIBS)
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
@@ -742,7 +743,7 @@ RAPTOR2_CFLAGS = -I/usr/local/include/raptor2
 RAPTOR2_LIBS = -L/usr/local/lib -lraptor2
 RAPTOR_MIN_VERSION = 2.0.7
 RAPTOR_VERSION_DEC = 20015
-RASQAL_EXTERNAL_LIBS =  -L/usr/local/lib -lraptor2 -lpcre -lm 
+RASQAL_EXTERNAL_LIBS =  -L/usr/local/lib -lraptor2 -lpcre -lm  -lgmp
 RASQAL_INTERNAL_CPPFLAGS =  -I/usr/local/include/raptor2  
 RASQAL_INTERNAL_LIBS = 
 RASQAL_LIBTOOLLIBS = librasqal.la
@@ -807,7 +808,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /mnt/d/redland/rasqal-0.9.33/install.linux
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
@@ -898,7 +899,7 @@ librasqal_la_SOURCES = rasqal_algebra.c rasqal_expr.c \
 nodist_librasqal_la_SOURCES = $(am__append_8)
 librasqal_la_LDFLAGS = -version-info 3:0:0
 librasqal_la_LIBADD =   \
-	 -L/usr/local/lib -lraptor2 -lpcre -lm  $(MEM_LIBS) \
+	 -L/usr/local/lib -lraptor2 -lpcre -lm  -lgmp $(MEM_LIBS) \
 	$(top_builddir)/libsv/libsv.la $(am__append_10)
 librasqal_la_DEPENDENCIES =   \
 	$(top_builddir)/libsv/libsv.la $(am__append_11)

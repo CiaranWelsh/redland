@@ -2,22 +2,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Part I. Reference Manual: Rasqal RDF Query Library Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<title>Part I. Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Rasqal RDF Query Library Manual">
 <link rel="up" href="index.html" title="Rasqal RDF Query Library Manual">
 <link rel="prev" href="rasqal.html" title="Rasqal Overview">
-<link rel="next" href="rasqal-section-general.html" title="section-general">
-<meta name="generator" content="GTK-Doc V1.27 (XML mode)">
+<link rel="next" href="rasqal-section-general.html" title="General library facilities">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
-<td width="100%" align="left" class="shortcuts"></td>
-<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
-<td><img src="up-insensitive.png" width="16" height="16" border="0"></td>
-<td><a accesskey="p" href="rasqal.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
-<td><a accesskey="n" href="rasqal-section-general.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="rasqal.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td> </td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Rasqal RDF Query Library Manual</th>
+<td><a accesskey="n" href="rasqal-section-general.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr></table>
 <div class="part">
 <div class="titlepage"><div><div><h1 class="title">
@@ -29,60 +29,60 @@
       </p>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
+<dl>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-general.html">section-general</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-general.html">General library facilities</a></span><span class="refpurpose"> — Startup and shutdown, memory handling, version checks and misc functions.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-data.html">section-data</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-data.html">Data Graphs</a></span><span class="refpurpose"> — RDF graph sources for triples.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-expression.html">section-expression</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-expression.html">Expressions</a></span><span class="refpurpose"> — Query language expressions.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-graph-pattern.html">section-graph_pattern</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-graph-pattern.html">Graph patterns</a></span><span class="refpurpose"> — Collections of triple patterns, sub-graph patterns with operators.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-literal.html">section-literal</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-literal.html">Literal</a></span><span class="refpurpose"> — RDF literals and RDF query-specific literals.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-prefix.html">section-prefix</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-prefix.html">Prefixes</a></span><span class="refpurpose"> — XML QName-style prefixes made from a URI and a short text prefix.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-query.html">section-query</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-query.html">Query</a></span><span class="refpurpose"> — Query object API, parsing and execution</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-query-results.html">section-query_results</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-query-results.html">Query Results</a></span><span class="refpurpose"> — Query results as variable bindings, boolean or RDF graphs.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-query-results-formatter.html">section-query_results_formatter</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-query-results-formatter.html">Query Results Formatter</a></span><span class="refpurpose"> — Query results formatted into a syntax.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-row.html">section-row</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-row.html">Query Result Row</a></span><span class="refpurpose"> — Result row in a query result set containing a set of literals that are bound to variables.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-service.html">section-service</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-service.html">Service</a></span><span class="refpurpose"> — Execute queries remotely via a SPARQL HTTP Protocol service.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-triple.html">section-triple</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-triple.html">Triples</a></span><span class="refpurpose"> — Triple pattern or RDF triple.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-triples-source.html">section-triples_source</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-triples-source.html">Triples Source</a></span><span class="refpurpose"> — Source of matches to a triple pattern.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-variable.html">section-variable</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-variable.html">Variables</a></span><span class="refpurpose"> — Variable with names and literal value.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-variables-table.html">section-variables-table</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-variables-table.html">Variables Table</a></span><span class="refpurpose"> — A table of variables with optional bound literal values.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-updates.html">section-updates</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-updates.html">Updates</a></span><span class="refpurpose"> — Graph update operations</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-utilities.html">section-utilities</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-utilities.html">Utilities</a></span><span class="refpurpose"> — Utility functions.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="rasqal-section-xsd.html">section-xsd</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="rasqal-section-xsd.html">XML Schema Datetime and Decimals</a></span><span class="refpurpose"> — XML Schema datetime and arbitrary length decimal number arithmetic.</span>
 </dt>
 <dt><span class="chapter"><a href="rasqal-changes.html">API Changes</a></span></dt>
 <dd><dl>
@@ -129,6 +129,7 @@
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.27</div>
+<hr>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

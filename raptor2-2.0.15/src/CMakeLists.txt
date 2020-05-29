@@ -238,10 +238,6 @@ add_library(raptor2
         ${raptor_parsedate_sources}
         )
 
-target_include_directories(raptor2 PUBLIC
-        /usr/include/yajl
-        )
-
 target_link_libraries(raptor2 PUBLIC
         ${raptor_libxslt_libs}
         ${raptor_libxml_libs}
@@ -258,19 +254,15 @@ target_link_libraries(raptor2 PUBLIC
         m
         yajl
         # These and others are needed for WWW support. These are hard to find/install so skip
-#        curl
-#        ssl
-#        crypto
-#        dl
+        #        curl
+        #        ssl
+        #        crypto
+        #        dl
         idn2
-#        nghttp2
+        #        nghttp2
 
-#        -lbcrypt -lcrypt32 -lcrypto \ # from https://github.com/curl/curl/issues/2516
-#-lcurl -lgdi32 -lnghttp2 -lssh2 -lssl -lwldap32 -lws2_32 -lz
-#        ${LIBXML2_STATIC_LIBRARY}
-#        ${ZLIB_STATIC_LIBRARY}
-#        ${LIBXML2_EXTRA_LIBS}
-#        ${LIBICONV_STATIC_LIBRARY}
+        #        -lbcrypt -lcrypt32 -lcrypto \ # from https://github.com/curl/curl/issues/2516
+        #-lcurl -lgdi32 -lnghttp2 -lssh2 -lssl -lwldap32 -lws2_32 -lz
         ${CMAKE_DL_LIBS} # defines libdl libraries
         )
 
@@ -279,11 +271,9 @@ set(LIBXML2_INCLUDE_DIRS ${LIBXML2_INCLUDE_DIRS})
 target_include_directories(raptor2 PUBLIC ${LIBXML2_INCLUDE_DIRS})
 
 set_target_properties(
-        raptor2
-        PROPERTIES
-        COMPILE_DEFINITIONS "LIBRDFA_IN_RAPTOR;RAPTOR_INTERNAL;${LIBXML2_DEFINITIONS};${LIBXSLT_DEFINITIONS}"
+        raptor2 PROPERTIES COMPILE_DEFINITIONS "LIBRDFA_IN_RAPTOR;RAPTOR_INTERNAL;${LIBXML2_DEFINITIONS};${LIBXSLT_DEFINITIONS}"
 )
-
+set_target_properties(raptor2 PROPERTIES PUBLIC_HEADER "raptor2.h")
 
 #######################################################################################
 # Build some raptor2 tests to ensure each part of raptor builds

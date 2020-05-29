@@ -107,7 +107,8 @@ extern "C" {
 
 
 #ifndef LIBRDF_OBJC_FRAMEWORK
-#include <raptor.h>
+#include <raptor2.h>
+
 #else
 #include <Redland/raptor.h>
 #endif

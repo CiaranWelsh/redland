@@ -219,8 +219,17 @@ find_path(CURL_INCLUDE_DIRS
 # Compile list of CMAKE_ARGS for raptor
 
 set(RAPTOR_SOURCE_DIR ${CMAKE_SOURCE_DIR}/raptor2-2.0.15)
-set(RAPTOR_BUILD_DIR ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/build-${PLATFORM})
-set(RAPTOR_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/install)
+set(RAPTOR_BUILD_DIR ${RAPTOR_SOURCE_DIR}/build-${PLATFORM})
+set(RAPTOR_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/raptor2-2.0.15/install-ubuntu)
+
+SET(RASQAL_SOURCE_DIR ${CMAKE_SOURCE_DIR}/rasqal-0.9.33)
+SET(RASQAL_BUILD_DIR ${RASQAL_SOURCE_DIR}/build-${PLATFORM})
+SET(RASQAL_INSTALL_PREFIX ${RASQAL_SOURCE_DIR}/install-ubuntu)
+
+SET(LIBRDF_SOURCE_DIR ${CMAKE_SOURCE_DIR}/redland-1.0.17-0.9.33)
+SET(LIBRDF_BUILD_DIR ${RASQAL_SOURCE_DIR}/build-${PLATFORM})
+SET(LIBRDF_INSTALL_PREFIX ${RASQAL_SOURCE_DIR}/install-ubuntu)
+
 
 message(STATUS "${CMAKE_SOURCE_DIR}/raptor2-2.0.15")
 
@@ -236,60 +245,34 @@ ExternalProject_Add(
         raptor2
         SOURCE_DIR ${RAPTOR_SOURCE_DIR}
         BINARY_DIR ${RAPTOR_BUILD_DIR}
-#        DEPENDS ${RAPTOR_DEPENDENCY_TARGETS}
-
+        #        DEPENDS ${RAPTOR_DEPENDENCY_TARGETS}
         LIST_SEPARATOR |
         CMAKE_ARGS
-        -DCMAKE_EXE_LINKER_FLAGS="-lcurl -lxml2 -lxslt -lm -lz -llzma -lc"
+        #        -DCMAKE_EXE_LINKER_FLAGS="-lcurl -lxml2 -lxslt -lm -lz -llzma -lc"
+        -DLIBXML2_INCLUDE_DIRS=/mnt/d/redland/libxml2-2.9.10/install.ubuntu/include/libxml2
+        -DLIBXML2_STATIC_LIBRARY=/mnt/d/redland/libxml2-2.9.10/install.ubuntu/lib/libxml2.a
+        -DLIBXSLT_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libxslt.a
+        -DLIBXSLT_INCLUDE_DIRS=/usr/include
+        -DZLIB_INCLUDE_DIRS=/usr/include
+        -DZLIB_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libz.a
+        -DMATH_INCLUDE_DIRS=/usr/include
+        -DLIBM_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libm.a
+        #        -DCMAKE_INSTALL_PREFIX=./install_solo
         -DCMAKE_INSTALL_PREFIX=${RAPTOR_INSTALL_PREFIX}
-#        -DCURL_STATIC_LIBRARY=${CURL_STATIC_LIBRARY}
-#        -DCURL_INCLUDE_DIRS=${CURL_INCLUDE_DIRS}
-#        -DLIBXML2_INCLUDE_DIRS=${LIBXML2_INCLUDE_DIRS}
-#        -DLIBXML2_STATIC_LIBRARY=${LIBXML2_STATIC_LIBRARY}
-#        -DLIBXSLT_STATIC_LIBRARY=${LIBXSLT_STATIC_LIBRARY}
-#        -DLIBXSLT_INCLUDE_DIRS=${LIBXSLT_INCLUDE_DIRS}
-#        -DZLIB_INCLUDE_DIRS=${ZLIB_INCLUDE_DIRS}
-#        -DZLIB_STATIC_LIBRARY=${ZLIB_STATIC_LIBRARY}
-#        -DMATH_INCLUDE_DIRS=${MATH_INCLUDE_DIRS}
-#        -DLIBM_STATIC_LIBRARY=${LIBM_STATIC_LIBRARY}
-#        -DLIBXML2_EXTRA_LIBS=${LIBXML2_EXTRA_LIBS_PIPE_SEP}
+        -DLIBXML2_EXTRA_LIBS=m;lzma;c
+        -DYAJL_INCLUDE_DIRS=/usr/local/include/yajl
+        -DYAJL_STATIC_LIBRARY=/usr/local/lib/libyajl_s.a
 )
 
-#-DCURL_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libcurl.a
-#-DCURL_INCLUDE_DIRS=/usr/include/x86_64-linux-gnu
-#-DLIBXML2_INCLUDE_DIRS=/mnt/d/redland/libxml2-2.9.10/install.ubuntu/include/libxml2   N
-#-DLIBXML2_STATIC_LIBRARY=/mnt/d/redland/libxml2-2.9.10/install.ubuntu/lib/libxml2.a   N
-#-DLIBXSLT_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libxslt.a
-#-DLIBXSLT_INCLUDE_DIRS=/usr/include
-#-DZLIB_INCLUDE_DIRS=/usr/include       N should be local copy
-#-DZLIB_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libz.a
-#-DMATH_INCLUDE_DIRS=/usr/include
-#-DLIBM_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libm.a
-#-DCMAKE_INSTALL_PREFIX=./install_solo
-#-DLIBXML2_EXTRA_LIBS=m;lzma;c
-
-#find_library(RAPTOR2_STATIC_LIBRARY)
-#set(RAPTOR2_STATIC_LIBRARY ${RAPTOR_INSTALL_PREFIX}/raptor2)
-#ExternalProject_Add(
-#        rasqal
-#        SOURCE_DIR ${RASQAL_SOURCE_DIR}
-#        BINARY_DIR ${RASQAL_BUILD_DIR}
-#
-#        CMAKE_ARGS
-#        -DCMAKE_INSTALL_PREFIX=${RASQAL_INSTALL_PREFIX}
-#        -DCURL_STATIC_LIBRARY=${CURL_STATIC_LIBRARY}
-#        -DCURL_INCLUDE_DIRS=${CURL_INCLUDE_DIRS}
-#        -DLIBXML2_INCLUDE_DIRS=${LIBXML2_INCLUDE_DIRS}
-#        -DLIBXML2_STATIC_LIBRARY=${LIBXML2_STATIC_LIBRARY}
-#        -DLIBXSLT_STATIC_LIBRARY=${LIBXSLT_STATIC_LIBRARY}
-#        -DLIBXSLT_INCLUDE_DIRS=${LIBXSLT_INCLUDE_DIRS}
-#        -DZLIB_INCLUDE_DIRS=${ZLIB_INCLUDE_DIRS}
-#        -DZLIB_STATIC_LIBRARY=${ZLIB_STATIC_LIBRARY}
-#        -DMATH_INCLUDE_DIRS=${MATH_INCLUDE_DIRS}
-#        -DLIBM_STATIC_LIBRARY=${LIBM_STATIC_LIBRARY}
-#)
-
-#add_subdirectory(raptor2-2.0.15)
+ExternalProject_Add(
+        rasqal
+        SOURCE_DIR ${RASQAL_SOURCE_DIR}
+        BINARY_DIR ${RASQAL_BUILD_DIR}
+        LIST_SEPARATOR |
+        CMAKE_ARGS
+        -DCMAKE_INSTALL_PREFIX=${RASQAL_INSTALL_PREFIX}
+        -DRAPTOR2_INCLUDE_DIR=/mnt/d/redland/raptor2-2.0.15/install-ubuntu/include
+        -DRAPTOR2_STATIC_LIB=/mnt/d/redland/raptor2-2.0.15/install-ubuntu/lib/libraptor2.a)
 
 
 message(STATUS "
@@ -330,6 +313,18 @@ message(STATUS "
         RAPTOR_BUILD_DIR                ${RAPTOR_BUILD_DIR}
         RAPTOR_INSTALL_PREFIX           ${RAPTOR_INSTALL_PREFIX}
         RAPTOR_DEPENDENCY_TARGETS       ${RAPTOR_DEPENDENCY_TARGETS}
+
+    Rasqal Directories
+        RASQAL_SOURCE_DIR               ${RASQAL_SOURCE_DIR}
+        RASQAL_BUILD_DIR                ${RASQAL_BUILD_DIR}
+        RASQAL_INSTALL_PREFIX           ${RASQAL_INSTALL_PREFIX}
+        RASQAL_DEPENDENCY_TARGETS       ${RASQAL_DEPENDENCY_TARGETS}
+
+    Librdf Directories
+        LIBRDF_SOURCE_DIR               ${LIBRDF_SOURCE_DIR}
+        LIBRDF_BUILD_DIR                ${LIBRDF_BUILD_DIR}
+        LIBRDF_INSTALL_PREFIX           ${LIBRDF_INSTALL_PREFIX}
+        LIBRDF_DEPENDENCY_TARGETS       ${LIBRDF_DEPENDENCY_TARGETS}
 
     Zlib Directories:
         ZLIB_INCLUDE_DIRS               ${ZLIB_INCLUDE_DIRS}
