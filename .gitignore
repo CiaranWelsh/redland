@@ -4,3 +4,12 @@ build*
 .idea
 *.zip
 *.gz
+*.html
+*.Po
+install*
+CompressedSourceFiles
+*.7z
+*.exe
+*.lib
+*.sln
+*.build 
