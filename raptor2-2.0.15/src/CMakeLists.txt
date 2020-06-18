@@ -264,7 +264,6 @@ set_target_properties(
         COMPILE_DEFINITIONS "LIBRDFA_IN_RAPTOR;RAPTOR_INTERNAL;${LIBXML2_DEFINITIONS};${LIBXSLT_DEFINITIONS}"
 )
 
-# windows specific libs
 
 #######################################################################################
 # Build some raptor2 tests to ensure each part of raptor builds
@@ -297,7 +296,6 @@ add_dependencies(raptor_parse_test raptor2)
 target_link_libraries(raptor_parse_test PRIVATE
         raptor2
         ${LIBM_STATIC_LIBRARY}
-        lzma
         )
 target_include_directories(raptor_parse_test PRIVATE raptor2
         ${MATH_INCLUDE_DIRS}
@@ -318,9 +316,8 @@ add_dependencies(raptor_uri_test raptor2)
 target_link_libraries(raptor_uri_test PRIVATE
         raptor2
         ${LIBXML2_STATIC_LIBRARY}
-        m
-
         )
+
 target_include_directories(raptor_uri_test PRIVATE
         ${LIBXML2_INCLUDE_DIRS}
         )

@@ -152,7 +152,7 @@
 /* #undef HAVE_YAJL_YAJL_PARSE_H */
 
 /* Is __FUNCTION__ available */
-#define HAVE___FUNCTION__ 1
+/* #define HAVE___FUNCTION__ 1/*
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"

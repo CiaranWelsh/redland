@@ -51,7 +51,22 @@ INCLUDE_DIRECTORIES(
         ${LIBXSLT_INCLUDE_DIRS}  # is this dependency actually used anywhere???
         ${ZLIB_INCLUDE_DIRS}
         ${LIBICONV_INCLUDE_DIRS}
+)
 
+set(vcpkg_include "D:/vcpkg/installed/x64-windows/include")
+set(vcpkg_lib "D:/vcpkg/installed/x64-windows/lib")
+add_definitions(
+        -DLIBXML2_INCLUDE_DIRS=${vcpkg_include}
+        -DLIBXML2_STATIC_LIBRARY=${vcpkg_lib}/libxml2.lib
+        -DLIBXSLT_INCLUDE_DIRS=${vcpkg_include}
+        -DLIBXSLT_STATIC_LIBRARY=${vcpkg_lib}/libxslt.lib
+        -DZLIB_INCLUDE_DIRS=${vcpkg_include}
+        -DZLIB_STATIC_LIBRARY=${vcpkg_lib}/zlib.lib
+#        -DLIBM_STATIC_LIBRARY=/usr/lib/x86_64-linux-gnu/libm.a
+        -DCMAKE_INSTALL_PREFIX=D:/redland/raptor2-2.0.15/install-windows
+#        -DLIBXML2_EXTRA_LIBS=m;lzma;c
+        -DYAJL_INCLUDE_DIRS=${vcpkg_include}
+        -DYAJL_STATIC_LIBRARY=${vcpkg_lib}/yajl.lib
 )
 
 ################################################################
