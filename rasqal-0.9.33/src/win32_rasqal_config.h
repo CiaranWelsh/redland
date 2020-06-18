@@ -45,7 +45,11 @@ extern "C" {
 /* MS names for these functions */
 // next line breaks build on wntmsci12
 //#define vsnprintf _vsnprintf
-#define snprintf _snprintf
+
+// fatal error C1189: #error:  Macro definition of snprintf conflicts with Standard Library function declaration
+//  so commenting the snprintf macro out
+//#define snprintf _snprintf
+
 #define access _access
 #define stricmp _stricmp
 #define strnicmp _strnicmp
