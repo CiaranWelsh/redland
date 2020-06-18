@@ -201,7 +201,9 @@ add_library(raptor2
         raptor_ntriples.c
         raptor_escaped.c
         raptor_www_libxml.c
-        #        raptor_www_curl.c
+        raptor_www_curl.c
+
+        raptor_config.h
 
         ${raptor_parser_rdfxml_sources}
         ${raptor_parser_ntriples_nquads_sources}
@@ -228,22 +230,32 @@ add_library(raptor2
         ${raptor_parsedate_sources}
         )
 
+#winflexbison exe's at D:\Chocolatey\lib\winflexbison\tools
+set(windows_specific_libs
+        "D:/vcpkg/packages/getopt-win32_x86-windows/lib/getopt.lib"
+
+        )
+
+set(windows_specific_include
+        "D:/vcpkg/packages/getopt-win32_x86-windows/include/"
+        "D:/redlandwin_flex_bison"
+        )
+
 target_link_libraries(raptor2 PUBLIC
         ${raptor_libxslt_libs}
         ${raptor_libxml_libs}
         ${raptor_yajl_libs}
         ${raptor_www_libs}
-
         ${LIBXML2_STATIC_LIBRARY}
         ${ZLIB_STATIC_LIBRARY}
         ${LIBXML2_EXTRA_LIBS}
         ${LIBICONV_STATIC_LIBRARY}
+        ${windows_specific_libs}
         )
 
-set(LIBXML2_STATIC_LIBRARY ${LIBXML2_STATIC_LIBRARY})
-set(LIBXML2_INCLUDE_DIRS ${LIBXML2_INCLUDE_DIRS})
 target_include_directories(raptor2 PUBLIC
         ${LIBXML2_INCLUDE_DIRS}
+        ${windows_specific_include}
         )
 
 set_target_properties(
@@ -252,6 +264,7 @@ set_target_properties(
         COMPILE_DEFINITIONS "LIBRDFA_IN_RAPTOR;RAPTOR_INTERNAL;${LIBXML2_DEFINITIONS};${LIBXSLT_DEFINITIONS}"
 )
 
+# windows specific libs
 
 #######################################################################################
 # Build some raptor2 tests to ensure each part of raptor builds
@@ -306,6 +319,7 @@ target_link_libraries(raptor_uri_test PRIVATE
         raptor2
         ${LIBXML2_STATIC_LIBRARY}
         m
+
         )
 target_include_directories(raptor_uri_test PRIVATE
         ${LIBXML2_INCLUDE_DIRS}
@@ -430,7 +444,7 @@ if (RAPTOR_PARSER_RDFXML)
     #raptor_xml_test
     add_executable(raptor_xml_test raptor_xml.c)
     add_dependencies(raptor_xml_test raptor2)
-    target_link_libraries(raptor_xml_test PRIVATE raptor2 )
+    target_link_libraries(raptor_xml_test PRIVATE raptor2)
     add_test(raptor_xml_test raptor_xml_test)
 
     set_target_properties(
