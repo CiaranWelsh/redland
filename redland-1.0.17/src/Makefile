@@ -117,16 +117,16 @@ host_triplet = x86_64-pc-linux-gnu
 am__append_2 = rdf_storage_file.c
 #am__append_3 = librdf_storage_tstore.la
 #am__append_4 = librdf_storage_mysql.la
-#am__append_5 = librdf_storage_sqlite.la
-#am__append_6 = librdf_storage_postgresql.la
+am__append_5 = librdf_storage_sqlite.la
+am__append_6 = librdf_storage_postgresql.la
 am__append_7 = librdf_storage_virtuoso.la 
 ##am__append_8 = rdf_storage_tstore.c
 ##am__append_9 = rdf_storage_mysql.c
-##am__append_10 = rdf_storage_sqlite.c
-##am__append_11 = rdf_storage_postgresql.c
+#am__append_10 = rdf_storage_sqlite.c
+#am__append_11 = rdf_storage_postgresql.c
 #am__append_12 = rdf_storage_virtuoso.c rdf_query_virtuoso.c rdf_storage_virtuoso_internal.h
 #am__append_13 = mysql-v1.ttl mysql-v2.ttl
-am__append_14 = -DREDLAND_MODULE_PATH="\""${exec_prefix}/lib/redland"\""
+am__append_14 = -DREDLAND_MODULE_PATH="\""/usr/local/lib/redland:${exec_prefix}/lib/redland"\""
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/build/gtk-doc.m4 \
@@ -203,8 +203,8 @@ am__librdf_la_SOURCES_DIST = rdf_init.c rdf_raptor.c rdf_uri.c \
 am__objects_2 = rdf_storage_file.lo
 ##am__objects_3 = rdf_storage_tstore.lo
 ##am__objects_4 = rdf_storage_mysql.lo
-##am__objects_5 = rdf_storage_sqlite.lo
-##am__objects_6 = rdf_storage_postgresql.lo
+#am__objects_5 = rdf_storage_sqlite.lo
+#am__objects_6 = rdf_storage_postgresql.lo
 #am__objects_7 = rdf_storage_virtuoso.lo \
 #	rdf_query_virtuoso.lo
 am_librdf_la_OBJECTS = rdf_init.lo rdf_raptor.lo rdf_uri.lo \
@@ -240,32 +240,32 @@ librdf_storage_mysql_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(LDFLAGS) -o $@
 #am_librdf_storage_mysql_la_rpath =  \
 #	-rpath $(plugindir)
-#librdf_storage_postgresql_la_DEPENDENCIES =  \
-#	librdf.la
+librdf_storage_postgresql_la_DEPENDENCIES =  \
+	librdf.la
 am__librdf_storage_postgresql_la_SOURCES_DIST =  \
 	rdf_storage_postgresql.c
-#am_librdf_storage_postgresql_la_OBJECTS = librdf_storage_postgresql_la-rdf_storage_postgresql.lo
+am_librdf_storage_postgresql_la_OBJECTS = librdf_storage_postgresql_la-rdf_storage_postgresql.lo
 librdf_storage_postgresql_la_OBJECTS =  \
 	$(am_librdf_storage_postgresql_la_OBJECTS)
 librdf_storage_postgresql_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(AM_CFLAGS) $(CFLAGS) $(librdf_storage_postgresql_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-#am_librdf_storage_postgresql_la_rpath =  \
-#	-rpath \
-#	$(plugindir)
-#librdf_storage_sqlite_la_DEPENDENCIES =  \
-#	librdf.la
+am_librdf_storage_postgresql_la_rpath =  \
+	-rpath \
+	$(plugindir)
+librdf_storage_sqlite_la_DEPENDENCIES =  \
+	librdf.la
 am__librdf_storage_sqlite_la_SOURCES_DIST = rdf_storage_sqlite.c
-#am_librdf_storage_sqlite_la_OBJECTS = librdf_storage_sqlite_la-rdf_storage_sqlite.lo
+am_librdf_storage_sqlite_la_OBJECTS = librdf_storage_sqlite_la-rdf_storage_sqlite.lo
 librdf_storage_sqlite_la_OBJECTS =  \
 	$(am_librdf_storage_sqlite_la_OBJECTS)
 librdf_storage_sqlite_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(AM_CFLAGS) $(CFLAGS) $(librdf_storage_sqlite_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-#am_librdf_storage_sqlite_la_rpath =  \
-#	-rpath $(plugindir)
+am_librdf_storage_sqlite_la_rpath =  \
+	-rpath $(plugindir)
 #librdf_storage_tstore_la_DEPENDENCIES =  \
 #	librdf.la
 am__librdf_storage_tstore_la_SOURCES_DIST = rdf_storage_tstore.c
@@ -704,12 +704,12 @@ PACKAGE_URL =
 PACKAGE_VERSION = 1.0.17
 PATH_SEPARATOR = :
 PERL = perl
-PG_CONFIG = 
+PG_CONFIG = pg_config
 PKG_CONFIG = /usr/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
 PKG_CONFIG_PATH = 
-POSTGRESQL_CPPFLAGS = 
-POSTGRESQL_LIBS = 
+POSTGRESQL_CPPFLAGS = -I/usr/include/postgresql
+POSTGRESQL_LIBS = -L/usr/lib/x86_64-linux-gnu -lpq
 RANLIB = ranlib
 RAPTOR2_CFLAGS = -I/usr/local/include/raptor2
 RAPTOR2_LIBS = -L/usr/local/lib -lraptor2
@@ -721,12 +721,12 @@ RASQAL_MIN_VERSION = 0.9.25
 RECHO = echo
 RECHO_C = 
 RECHO_N = -n
-REDLAND_MODULE_PATH = ${exec_prefix}/lib/redland
+REDLAND_MODULE_PATH = /usr/local/lib/redland:${exec_prefix}/lib/redland
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 SQLITE_CFLAGS = 
-SQLITE_LIBS = 
+SQLITE_LIBS = -lsqlite3
 STRIP = strip
 
 # Use tar, whatever it is called (better be GNU tar though)
@@ -780,7 +780,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local
+prefix = /mnt/d/redland/redland-1.0.17/install-with-sqlite
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
@@ -853,17 +853,17 @@ plugin_LTLIBRARIES = $(am__append_3) \
 #librdf_storage_mysql_la_CPPFLAGS = 
 #librdf_storage_mysql_la_LIBADD =  librdf.la
 #librdf_storage_mysql_la_LDFLAGS = -module -avoid-version
-#librdf_storage_sqlite_la_SOURCES = rdf_storage_sqlite.c
+librdf_storage_sqlite_la_SOURCES = rdf_storage_sqlite.c
 # This extra substitution is to ensure general -I paths appear before
 # ones for SQLITE headers.  There is no other way to adjust the
 # automake-generated rule to ensure this.
-#librdf_storage_sqlite_la_CPPFLAGS = $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) 
-#librdf_storage_sqlite_la_LIBADD =  librdf.la
-#librdf_storage_sqlite_la_LDFLAGS = -module -avoid-version
-#librdf_storage_postgresql_la_SOURCES = rdf_storage_postgresql.c
-#librdf_storage_postgresql_la_CPPFLAGS = 
-#librdf_storage_postgresql_la_LIBADD =  librdf.la
-#librdf_storage_postgresql_la_LDFLAGS = -module -avoid-version
+librdf_storage_sqlite_la_CPPFLAGS = $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) 
+librdf_storage_sqlite_la_LIBADD = -lsqlite3 librdf.la
+librdf_storage_sqlite_la_LDFLAGS = -module -avoid-version
+librdf_storage_postgresql_la_SOURCES = rdf_storage_postgresql.c
+librdf_storage_postgresql_la_CPPFLAGS = -I/usr/include/postgresql
+librdf_storage_postgresql_la_LIBADD = -L/usr/lib/x86_64-linux-gnu -lpq librdf.la
+librdf_storage_postgresql_la_LDFLAGS = -module -avoid-version
 librdf_storage_virtuoso_la_SOURCES = rdf_storage_virtuoso.c rdf_query_virtuoso.c rdf_storage_virtuoso_internal.h
 librdf_storage_virtuoso_la_CPPFLAGS = 
 librdf_storage_virtuoso_la_LIBADD = -lodbc librdf.la -lrasqal

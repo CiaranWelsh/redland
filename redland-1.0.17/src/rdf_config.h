@@ -132,7 +132,7 @@
 #define HAVE_LIBDLLOADER 1
 
 /* Define to 1 if you have the <libpq-fe.h> header file. */
-/* #undef HAVE_LIBPQ_FE_H */
+#define HAVE_LIBPQ_FE_H 1
 
 /* Have local MD5 digest */
 #define HAVE_LOCAL_MD5_DIGEST 1
@@ -180,7 +180,7 @@
 /* #undef HAVE_SHL_LOAD */
 
 /* Define to 1 if you have the <sqlite3.h> header file. */
-/* #undef HAVE_SQLITE3_H */
+#define HAVE_SQLITE3_H 1
 
 /* Define to 1 if you have the <sqlite.h> header file. */
 /* #undef HAVE_SQLITE_H */
@@ -343,10 +343,10 @@
 /* #undef STORAGE_MYSQL */
 
 /* Building PostgreSQL storage */
-/* #undef STORAGE_POSTGRESQL */
+#define STORAGE_POSTGRESQL 1
 
 /* Building SQLite storage */
-/* #undef STORAGE_SQLITE */
+#define STORAGE_SQLITE 1
 
 /* Building trees storage */
 #define STORAGE_TREES 1

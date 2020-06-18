@@ -1205,20 +1205,23 @@ set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
 set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
 
-if(USE_MANUAL)
-  add_subdirectory(docs)
-endif()
+#commented out by ciaran welsh 17/06/2020
+#if(USE_MANUAL)
+#  add_subdirectory(docs)
+#endif()
 
 add_subdirectory(lib)
 
-if(BUILD_CURL_EXE)
-  add_subdirectory(src)
-endif()
+#commented out by ciaran welsh 17/06/2020
+#if(BUILD_CURL_EXE)
+#  add_subdirectory(src)
+#endif()
 
-include(CTest)
-if(BUILD_TESTING)
-  add_subdirectory(tests)
-endif()
+#commented out by ciaran welsh 17/06/2020
+#include(CTest)
+#if(BUILD_TESTING)
+#  add_subdirectory(tests)
+#endif()
 
 # NTLM support requires crypto function adaptions from various SSL libs
 # TODO alternative SSL libs tests for SSP1, GNUTLS, NSS

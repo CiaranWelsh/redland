@@ -399,7 +399,8 @@ librdf_statement_to_string(librdf_statement *statement)
   
   LIBRDF_ASSERT_OBJECT_POINTER_RETURN_VALUE(statement, librdf_statement, NULL);
 
-  iostr = raptor_new_iostream_to_string(statement->world, (void**)&s, NULL, malloc);
+  iostr = raptor_new_iostream_to_string(statement->world,
+                                        (void**)&s, NULL, malloc);
   if(!iostr)
     return NULL;
   

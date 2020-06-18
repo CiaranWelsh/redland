@@ -146,10 +146,10 @@
 #define HAVE_XMLSAX2INTERNALSUBSET 1
 
 /* YAJL has API version 2 */
-/* #undef HAVE_YAJL2 */
+#define HAVE_YAJL2 1
 
 /* Define to 1 if you have the <yajl/yajl_parse.h> header file. */
-/* #undef HAVE_YAJL_YAJL_PARSE_H */
+#define HAVE_YAJL_YAJL_PARSE_H 1
 
 /* Is __FUNCTION__ available */
 #define HAVE___FUNCTION__ 1
@@ -218,7 +218,7 @@
 #define RAPTOR_PARSER_GUESS 1
 
 /* Building JSON parser */
-/* #undef RAPTOR_PARSER_JSON */
+#define RAPTOR_PARSER_JSON 1
 
 /* Building N-Quads parser */
 #define RAPTOR_PARSER_NQUADS 1

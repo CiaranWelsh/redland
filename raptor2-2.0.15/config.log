@@ -27,6 +27,7 @@ uname -v = #1 SMP Wed Nov 13 11:44:37 UTC 2019
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
+PATH: /home/ciaran/Software/doxygen-1.8.18/bin
 PATH: /home/ciaran/Software/cmake-3.15.7/bin/
 PATH: /home/ciaran/miniconda3/bin
 PATH: /home/ciaran/miniconda3/condabin
@@ -71,10 +72,13 @@ PATH: /mnt/d/Graphviz2.38/bin
 PATH: /mnt/d/PuTTY
 PATH: /mnt/d/LLVM6.0.1/LLVM/bin
 PATH: /mnt/c/Program Files/dotnet
+PATH: /mnt/c/Program Files/Docker/Docker/resources/bin
+PATH: /mnt/c/ProgramData/DockerDesktop/version-bin
 PATH: /mnt/c/Users/Ciaran/AppData/Local/Microsoft/WindowsApps
 PATH: /mnt/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin
 PATH: /mnt/c/Users/Ciaran/AppData/Roaming/npm
 PATH: /mnt/c/Users/Ciaran/AppData/Local/atom/bin
+PATH: /mnt/c/Users/Ciaran/AppData/Local/GitHubDesktop/bin
 PATH: /snap/bin
 PATH: /home/ciaran/miniconda3/bin
 
@@ -456,11 +460,11 @@ configure:13301: checking lex output file root
 configure:13315: result: lex.yy
 configure:13320: checking lex library
 configure:13334: gcc -o conftest    conftest.c   >&5
-/tmp/ccE8Vgx2.o: In function `yylex':
+/tmp/cctusxjh.o: In function `yylex':
 conftest.c:(.text+0x768): undefined reference to `yywrap'
-/tmp/ccE8Vgx2.o: In function `input':
+/tmp/cctusxjh.o: In function `input':
 conftest.c:(.text+0x1292): undefined reference to `yywrap'
-/tmp/ccE8Vgx2.o: In function `main':
+/tmp/cctusxjh.o: In function `main':
 conftest.c:(.text+0x1f69): undefined reference to `yywrap'
 collect2: error: ld returned 1 exit status
 configure:13334: $? = 1
@@ -2294,7 +2298,8 @@ configure:13581: checking for perl
 configure:13597: found /usr/bin/perl
 configure:13608: result: perl
 configure:13624: checking for jing
-configure:13654: result: no
+configure:13640: found /usr/bin/jing
+configure:13651: result: jing
 configure:13680: checking for echo
 configure:13696: found /bin/echo
 configure:13707: result: echo
@@ -2841,7 +2846,7 @@ configure:14502: $? = 0
 configure:14502: result: yes
 configure:14502: checking for stricmp
 configure:14502: gcc -o conftest    conftest.c  >&5
-/tmp/ccSYNRnb.o: In function `main':
+/tmp/ccDMcVbj.o: In function `main':
 conftest.c:(.text+0xa): undefined reference to `stricmp'
 collect2: error: ld returned 1 exit status
 configure:14502: $? = 1
@@ -2970,7 +2975,7 @@ configure:14502: $? = 0
 configure:14502: result: yes
 configure:14502: checking for qsort_s
 configure:14502: gcc -o conftest    conftest.c  >&5
-/tmp/cc5LFAiD.o: In function `main':
+/tmp/cccC6q20.o: In function `main':
 conftest.c:(.text+0xa): undefined reference to `qsort_s'
 collect2: error: ld returned 1 exit status
 configure:14502: $? = 1
@@ -3303,11 +3308,31 @@ configure:15763: result: yes
 configure:15763: checking for libxslt/xslt.h
 configure:15763: result: yes
 configure:15795: checking for yajl installation
-configure:15813: result: not found. Get it from http://lloyd.github.com/yajl/ and use --with-yajl=DIR if necessary to configure the installation directory.
+configure:15816: result: /usr/local
+configure:15826: checking for yajl_parse in -lyajl
+configure:15851: gcc -o conftest  -I/usr/local/include  -L/usr/local/lib  conftest.c -lyajl   >&5
+configure:15851: $? = 0
+configure:15860: result: yes
+configure:15868: checking for yajl_tree_parse in -lyajl
+configure:15893: gcc -o conftest  -I/usr/local/include  -L/usr/local/lib  conftest.c -lyajl   >&5
+configure:15893: $? = 0
+configure:15902: result: yes
+configure:15912: checking yajl/yajl_parse.h usability
+configure:15912: gcc -c  -I/usr/local/include  conftest.c >&5
+configure:15912: $? = 0
+configure:15912: result: yes
+configure:15912: checking yajl/yajl_parse.h presence
+configure:15912: gcc -E -I/usr/local/include  conftest.c
+configure:15912: $? = 0
+configure:15912: result: yes
+configure:15912: checking for yajl/yajl_parse.h
+configure:15912: result: yes
+configure:15923: checking YAJL API version
+configure:15925: result: 2
 configure:15957: checking GRDDL parser requirements
 configure:15960: result: yes
 configure:15970: checking JSON parser requirements
-configure:15978: result: no - libyajl is not available
+configure:15973: result: yes
 configure:16019: checking RDF parsers required
 configure:16028: result: all
 configure:16237: checking RDF serializers required
@@ -3328,7 +3353,7 @@ configure:16612: checking NFC library to use
 configure:16626: result: none
 configure:16637: checking libinn.h usability
 configure:16637: gcc -c    conftest.c >&5
-conftest.c:126:10: fatal error: libinn.h: No such file or directory
+conftest.c:129:10: fatal error: libinn.h: No such file or directory
  #include <libinn.h>
           ^~~~~~~~~~
 compilation terminated.
@@ -3404,6 +3429,8 @@ configure: failed program was:
 | #define HAVE_LIBXML_HTMLPARSER_H 1
 | #define RAPTOR_LIBXML_HTML_PARSE_NONET 1
 | #define HAVE_LIBXSLT_XSLT_H 1
+| #define HAVE_YAJL_YAJL_PARSE_H 1
+| #define HAVE_YAJL2 1
 | #define RAPTOR_PARSER_RDFXML 1
 | #define RAPTOR_PARSER_NTRIPLES 1
 | #define RAPTOR_PARSER_TURTLE 1
@@ -3413,6 +3440,7 @@ configure: failed program was:
 | #define RAPTOR_PARSER_RDFA 1
 | #define RAPTOR_PARSER_NQUADS 1
 | #define RAPTOR_PARSER_GRDDL 1
+| #define RAPTOR_PARSER_JSON 1
 | #define RAPTOR_SERIALIZER_RDFXML 1
 | #define RAPTOR_SERIALIZER_RDFXML_ABBREV 1
 | #define RAPTOR_SERIALIZER_TURTLE 1
@@ -3463,7 +3491,7 @@ configure: failed program was:
 configure:16637: result: no
 configure:16637: checking libinn.h presence
 configure:16637: gcc -E   conftest.c
-conftest.c:93:10: fatal error: libinn.h: No such file or directory
+conftest.c:96:10: fatal error: libinn.h: No such file or directory
  #include <libinn.h>
           ^~~~~~~~~~
 compilation terminated.
@@ -3539,6 +3567,8 @@ configure: failed program was:
 | #define HAVE_LIBXML_HTMLPARSER_H 1
 | #define RAPTOR_LIBXML_HTML_PARSE_NONET 1
 | #define HAVE_LIBXSLT_XSLT_H 1
+| #define HAVE_YAJL_YAJL_PARSE_H 1
+| #define HAVE_YAJL2 1
 | #define RAPTOR_PARSER_RDFXML 1
 | #define RAPTOR_PARSER_NTRIPLES 1
 | #define RAPTOR_PARSER_TURTLE 1
@@ -3548,6 +3578,7 @@ configure: failed program was:
 | #define RAPTOR_PARSER_RDFA 1
 | #define RAPTOR_PARSER_NQUADS 1
 | #define RAPTOR_PARSER_GRDDL 1
+| #define RAPTOR_PARSER_JSON 1
 | #define RAPTOR_SERIALIZER_RDFXML 1
 | #define RAPTOR_SERIALIZER_RDFXML_ABBREV 1
 | #define RAPTOR_SERIALIZER_TURTLE 1
@@ -3616,40 +3647,39 @@ generated by GNU Autoconf 2.69.  Invocation command line was
 
 on DESKTOP-K0APGUV
 
-config.status:1305: creating Makefile
-config.status:1305: creating raptor2.spec
-config.status:1305: creating raptor2.rdf
-config.status:1305: creating data/Makefile
-config.status:1305: creating docs/Makefile
-config.status:1305: creating docs/version.xml
-config.status:1305: creating examples/Makefile
-config.status:1305: creating scripts/Makefile
-config.status:1305: creating src/raptor2.h
-config.status:1305: creating src/Makefile
-config.status:1305: creating tests/Makefile
-config.status:1305: creating tests/feeds/Makefile
-config.status:1305: creating tests/grddl/Makefile
-config.status:1305: creating tests/ntriples/Makefile
-config.status:1305: creating tests/ntriples-2013/Makefile
-config.status:1305: creating tests/nquads-2013/Makefile
-config.status:1305: creating tests/rdfa/Makefile
-config.status:1305: creating tests/rdfa11/Makefile
-config.status:1305: creating tests/json/Makefile
-config.status:1305: creating tests/rdfxml/Makefile
-config.status:1305: creating tests/turtle/Makefile
-config.status:1305: creating tests/turtle-2013/Makefile
-config.status:1305: creating tests/trig/Makefile
-config.status:1305: creating utils/Makefile
-config.status:1305: creating librdfa/Makefile
-config.status:1305: creating raptor2.pc
-config.status:1305: creating src/raptor_config.h
-config.status:1486: src/raptor_config.h is unchanged
-config.status:1534: executing depfiles commands
-config.status:1534: executing libtool commands
+config.status:1308: creating Makefile
+config.status:1308: creating raptor2.spec
+config.status:1308: creating raptor2.rdf
+config.status:1308: creating data/Makefile
+config.status:1308: creating docs/Makefile
+config.status:1308: creating docs/version.xml
+config.status:1308: creating examples/Makefile
+config.status:1308: creating scripts/Makefile
+config.status:1308: creating src/raptor2.h
+config.status:1308: creating src/Makefile
+config.status:1308: creating tests/Makefile
+config.status:1308: creating tests/feeds/Makefile
+config.status:1308: creating tests/grddl/Makefile
+config.status:1308: creating tests/ntriples/Makefile
+config.status:1308: creating tests/ntriples-2013/Makefile
+config.status:1308: creating tests/nquads-2013/Makefile
+config.status:1308: creating tests/rdfa/Makefile
+config.status:1308: creating tests/rdfa11/Makefile
+config.status:1308: creating tests/json/Makefile
+config.status:1308: creating tests/rdfxml/Makefile
+config.status:1308: creating tests/turtle/Makefile
+config.status:1308: creating tests/turtle-2013/Makefile
+config.status:1308: creating tests/trig/Makefile
+config.status:1308: creating utils/Makefile
+config.status:1308: creating librdfa/Makefile
+config.status:1308: creating raptor2.pc
+config.status:1308: creating src/raptor_config.h
+config.status:1537: executing depfiles commands
+config.status:1537: executing libtool commands
 configure:19797: result:
 Raptor build summary:
-  RDF parsers available     : rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl
-  RDF parsers enabled       : rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl
+  RDF parsers available     : rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl json
+  RDF parsers enabled       : rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl json
   RDF serializers available : rdfxml rdfxml-abbrev turtle ntriples rss-1.0 dot html json atom nquads
   RDF serializers enabled   : rdfxml rdfxml-abbrev turtle ntriples rss-1.0 dot html json atom nquads
   XML parser                : libxml 2.9.10 via xml2-config
@@ -3753,8 +3783,11 @@ ac_cv_header_sys_time_h=yes
 ac_cv_header_sys_types_h=yes
 ac_cv_header_time=yes
 ac_cv_header_unistd_h=yes
+ac_cv_header_yajl_yajl_parse_h=yes
 ac_cv_host=x86_64-pc-linux-gnu
 ac_cv_lib_lex=-lfl
+ac_cv_lib_yajl_yajl_parse=yes
+ac_cv_lib_yajl_yajl_tree_parse=yes
 ac_cv_objext=o
 ac_cv_path_EGREP='/bin/grep -E'
 ac_cv_path_FGREP='/bin/grep -F'
@@ -3772,6 +3805,7 @@ ac_cv_prog_BISON=bison
 ac_cv_prog_CPP='gcc -E'
 ac_cv_prog_CURL_CONFIG=curl-config
 ac_cv_prog_GTKDOC_CHECK=gtkdoc-check.test
+ac_cv_prog_JING=jing
 ac_cv_prog_LEX=flex
 ac_cv_prog_PERL=perl
 ac_cv_prog_RECHO=echo
@@ -3849,7 +3883,7 @@ CC='gcc'
 CCDEPMODE='depmode=gcc3'
 CFLAGS=''
 CPP='gcc -E'
-CPPFLAGS=' -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-prototypes -Wswitch-enum -Wundef -Wunreachable-code -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-missing-field-initializers -Wno-sign-conversion -Wno-system-headers -Wno-unused-parameter -Wswitch-bool -Wlogical-not-parentheses -Wsizeof-array-argument -Wbool-compare -Wc90-c99-compat -Wc99-c11-compat -DRAPTOR_INTERNAL=1 -I/usr/include/libxml2 -I/usr/local/include/libxml2  '
+CPPFLAGS=' -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-prototypes -Wswitch-enum -Wundef -Wunreachable-code -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-missing-field-initializers -Wno-sign-conversion -Wno-system-headers -Wno-unused-parameter -Wswitch-bool -Wlogical-not-parentheses -Wsizeof-array-argument -Wbool-compare -Wc90-c99-compat -Wc99-c11-compat -DRAPTOR_INTERNAL=1 -I/usr/local/include -I/usr/include/libxml2 -I/usr/local/include/libxml2  '
 CURL_CONFIG='curl-config'
 CYGPATH_W='echo'
 DEFS='-DHAVE_CONFIG_H'
@@ -3889,9 +3923,9 @@ INSTALL_DATA='${INSTALL} -m 644'
 INSTALL_PROGRAM='${INSTALL}'
 INSTALL_SCRIPT='${INSTALL}'
 INSTALL_STRIP_PROGRAM='$(install_sh) -c -s'
-JING=''
+JING='jing'
 LD='/usr/bin/ld -m elf_x86_64'
-LDFLAGS=''
+LDFLAGS='-L/usr/local/lib '
 LEX='flex'
 LEXLIB='-lfl'
 LEX_OUTPUT_ROOT='lex.yy'
@@ -3942,16 +3976,16 @@ PKG_CONFIG_REQUIRES=''
 RANLIB='ranlib'
 RAPTOR_ICU_NFC_FALSE=''
 RAPTOR_ICU_NFC_TRUE='#'
-RAPTOR_LDFLAGS=' -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2'
+RAPTOR_LDFLAGS=' -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2 -L/usr/local/lib -lyajl'
 RAPTOR_LIBTOOLLIBS='libraptor2.la'
 RAPTOR_LIBTOOL_VERSION='0:0:0'
-RAPTOR_PARSERS=' rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl'
+RAPTOR_PARSERS=' rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl json'
 RAPTOR_PARSER_GRDDL_FALSE='#'
 RAPTOR_PARSER_GRDDL_TRUE=''
 RAPTOR_PARSER_GUESS_FALSE='#'
 RAPTOR_PARSER_GUESS_TRUE=''
-RAPTOR_PARSER_JSON_FALSE=''
-RAPTOR_PARSER_JSON_TRUE='#'
+RAPTOR_PARSER_JSON_FALSE='#'
+RAPTOR_PARSER_JSON_TRUE=''
 RAPTOR_PARSER_NQUADS_FALSE='#'
 RAPTOR_PARSER_NQUADS_TRUE=''
 RAPTOR_PARSER_NTRIPLES_FALSE='#'
@@ -4141,6 +4175,8 @@ target_alias=''
 #define HAVE_LIBXML_HTMLPARSER_H 1
 #define RAPTOR_LIBXML_HTML_PARSE_NONET 1
 #define HAVE_LIBXSLT_XSLT_H 1
+#define HAVE_YAJL_YAJL_PARSE_H 1
+#define HAVE_YAJL2 1
 #define RAPTOR_PARSER_RDFXML 1
 #define RAPTOR_PARSER_NTRIPLES 1
 #define RAPTOR_PARSER_TURTLE 1
@@ -4150,6 +4186,7 @@ target_alias=''
 #define RAPTOR_PARSER_RDFA 1
 #define RAPTOR_PARSER_NQUADS 1
 #define RAPTOR_PARSER_GRDDL 1
+#define RAPTOR_PARSER_JSON 1
 #define RAPTOR_SERIALIZER_RDFXML 1
 #define RAPTOR_SERIALIZER_RDFXML_ABBREV 1
 #define RAPTOR_SERIALIZER_TURTLE 1

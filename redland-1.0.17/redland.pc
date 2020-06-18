@@ -1,4 +1,4 @@
-prefix=/usr/local
+prefix=/mnt/d/redland/redland-1.0.17/install-with-sqlite
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

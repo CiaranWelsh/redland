@@ -124,7 +124,7 @@ am__append_9 = raptor_rss.c
 am__append_10 = raptor_grddl.c
 am__append_11 = raptor_guess.c
 am__append_12 = raptor_librdfa.c
-#am__append_13 = raptor_json.c
+am__append_13 = raptor_json.c
 am__append_14 = raptor_serialize_rdfxml.c
 am__append_15 = raptor_serialize_ntriples.c
 #am__append_16 = raptor_serialize_ntriples.c
@@ -224,7 +224,7 @@ am__objects_8 = raptor_rss.lo
 am__objects_9 = raptor_grddl.lo
 am__objects_10 = raptor_guess.lo
 am__objects_11 = raptor_librdfa.lo
-#am__objects_12 = raptor_json.lo
+am__objects_12 = raptor_json.lo
 am__objects_13 =  \
 	raptor_serialize_rdfxml.lo
 am__objects_14 =  \
@@ -534,7 +534,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS =  -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-prototypes -Wswitch-enum -Wundef -Wunreachable-code -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-missing-field-initializers -Wno-sign-conversion -Wno-system-headers -Wno-unused-parameter -Wswitch-bool -Wlogical-not-parentheses -Wsizeof-array-argument -Wbool-compare -Wc90-c99-compat -Wc99-c11-compat -DRAPTOR_INTERNAL=1 -I/usr/include/libxml2 -I/usr/local/include/libxml2  
+CPPFLAGS =  -Wall -Wc++-compat -Wextra -Wunused -Waggregate-return -Wbad-function-cast -Wcast-align -Wdeclaration-after-statement -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Werror-implicit-function-declaration -Wfloat-equal -Wformat-security -Wframe-larger-than=4096 -Winit-self -Winline -Wmissing-declarations -Wmissing-format-attribute -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wold-style-definition -Wpacked -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-prototypes -Wswitch-enum -Wundef -Wunreachable-code -Wunsafe-loop-optimizations -Wwrite-strings -Wno-conversion -Wno-format-nonliteral -Wno-missing-field-initializers -Wno-sign-conversion -Wno-system-headers -Wno-unused-parameter -Wswitch-bool -Wlogical-not-parentheses -Wsizeof-array-argument -Wbool-compare -Wc90-c99-compat -Wc99-c11-compat -DRAPTOR_INTERNAL=1 -I/usr/local/include -I/usr/include/libxml2 -I/usr/local/include/libxml2  
 CURL_CONFIG = curl-config
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
@@ -561,9 +561,9 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-JING = 
+JING = jing
 LD = /usr/bin/ld -m elf_x86_64
-LDFLAGS = 
+LDFLAGS = -L/usr/local/lib 
 LEX = flex
 LEXLIB = -lfl
 LEX_OUTPUT_ROOT = lex.yy
@@ -606,10 +606,10 @@ PKG_CONFIG_LIBDIR =
 PKG_CONFIG_PATH = 
 PKG_CONFIG_REQUIRES = 
 RANLIB = ranlib
-RAPTOR_LDFLAGS =  -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2
+RAPTOR_LDFLAGS =  -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2 -L/usr/local/lib -lyajl
 RAPTOR_LIBTOOLLIBS = libraptor2.la
 RAPTOR_LIBTOOL_VERSION = 0:0:0
-RAPTOR_PARSERS =  rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl
+RAPTOR_PARSERS =  rdfxml ntriples turtle trig guess rss-tag-soup rdfa nquads grddl json
 RAPTOR_SERIALIZERS =  rdfxml rdfxml-abbrev turtle ntriples rss-1.0 dot html json atom nquads
 RAPTOR_VERSION = 
 RAPTOR_VERSION_DECIMAL = 20015
@@ -734,7 +734,7 @@ libraptor2_la_SOURCES = raptor_parse.c raptor_serialize.c \
 	$(am__append_24) $(am__append_25) $(am__append_26)
 libraptor2_la_LIBADD = $(am__append_29)  ${LIBOBJDIR}raptor_www_curl$U.lo
 libraptor2_la_LDFLAGS = -version-info 0:0:0 \
- -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2 $(MEM_LIBS)
+ -lcurl -L/usr/local/lib -lxml2 -lz -llzma -lm -ldl -lxslt -lxml2 -L/usr/local/lib -lyajl $(MEM_LIBS)
 
 EXTRA_DIST = \
 CMakeLists.txt \
