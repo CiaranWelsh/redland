@@ -112,10 +112,10 @@ extern "C" {
 #include <Redland/raptor.h>
 #endif
 
-#if 1
+#if defined(__linux__)
 #include <sys/time.h>
 #endif
-#if 1
+#if defined(WIN32)
 #include <time.h>
 #endif
 

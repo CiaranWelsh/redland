@@ -100,11 +100,12 @@ add_library(rasqal STATIC ${RASQAL_SOURCES})
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(rasqal PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-        #        ${RAPTOR2_INCLUDE_DIR}
-        /mnt/d/redland/raptor2-2.0.15/install-ubuntu/include
+        ${RAPTOR2_INCLUDE_DIR}
+        #        /mnt/d/redland/raptor2-2.0.15/install-ubuntu/include
         ${LIBSV_DIR}
         ${LIBMTWIST_DIR}
         ${GETOPT_DIR}
+        #        D:/redland/raptor2-2.0.15/install-windows/include/raptor2
         )
 
 
